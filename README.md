@@ -1,5 +1,15 @@
 # 🐾 Ailurophile Stealer — Full Panel and Stub (V1, V2, V3, V4)
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/ExplB2412/Ailurophile-Stealer-Full)
+[![GitHub Stars](https://img.shields.io/github/stars/ExplB2412/Ailurophile-Stealer-Full?style=social)](https://github.com/ExplB2412/Ailurophile-Stealer-Full/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/ExplB2412/Ailurophile-Stealer-Full?style=social)](https://github.com/ExplB2412/Ailurophile-Stealer-Full/network/members)
+[![GitHub Issues](https://img.shields.io/github/issues/ExplB2412/Ailurophile-Stealer-Full)](https://github.com/ExplB2412/Ailurophile-Stealer-Full/issues)
+[![Last Commit](https://img.shields.io/github/last-commit/ExplB2412/Ailurophile-Stealer-Full)](https://github.com/ExplB2412/Ailurophile-Stealer-Full/commits/main)
+[![License](https://img.shields.io/github/license/ExplB2412/Ailurophile-Stealer-Full)](LICENSE)
+[![Language](https://img.shields.io/github/languages/top/ExplB2412/Ailurophile-Stealer-Full)](https://github.com/ExplB2412/Ailurophile-Stealer-Full)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](#)
+
+
 > ⚠️ **Disclaimer:**  
 I am not responsible for any illegal activities performed with this tool. This repository is provided strictly for **educational and research purposes**.
 
