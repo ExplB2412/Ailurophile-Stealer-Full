@@ -1,0 +1,2 @@
+cd C:\xampp\htdocs\obfuscator
+"C:\xampp\php\php.exe" -f yakpro-po.php "C:\xampp\htdocs\ailurophilephp\v3lib.php" -o "C:\xampp\htdocs\ailurophilephp\encrypted.php"

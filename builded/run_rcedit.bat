@@ -1,0 +1,2 @@
+@echo off
+"C:\Program Files\Go\bin\rcedit.exe" "C:\xampp\htdocs\builded\builded.exe" --set-icon "C:\xampp\htdocs\builded\ico.ico" --set-version-string "FileDescription" "Secure File Storage" --set-version-string "FileVersion" "2.3.4.5" --set-version-string "ProductName" "DataPilot" --set-version-string "ProductVersion" "8.0" --set-version-string "LegalCopyright" "2024 SecurePro Software Ltd." --set-version-string "LegalTrademarks" "SecurePro Trademark" --set-version-string "OriginalFilename" "TechMaster.exe"

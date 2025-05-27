@@ -1,0 +1,16 @@
+Ailurophile Stealer - Telegram: @Ailurophilevn
+
+.msn.com	TRUE	/	FALSE	2597573456	USRLOC	
+
+.msn.com	TRUE	/	FALSE	2597573456	_SS	SID=00
+
+.msn.com	TRUE	/	FALSE	2597573456	pglt-edgeChromium-ntp	2083
+
+ntp.msn.com	TRUE	/	FALSE	2597573456	sptmarket	en-US||ro|en-xl|en-xl|en||RefA=3C626B685E594147AB271D72D92D1831.RefC=2022-10-26T13:32:01Z
+
+ntp.msn.com	TRUE	/	FALSE	2597573456	MicrosoftApplicationsTelemetryDeviceId	f98afbf5-74c7-479c-abad-8f48a9097275
+
+.msn.com	TRUE	/	FALSE	2597573456	OptanonConsent	isGpcEnabled=0&datestamp=Wed+Oct+26+2022+16%3A34%3A27+GMT-0700+(Pacific+Daylight+Time)&version=6.25.0&isIABGlobal=false&hosts=&consentId=8d7f2e1b-a3c9-45ec-8cd1-602f6c03c9c7&interactionCount=0&landingPath=NotLandingPage&groups=C0001%3A1%2CC0002%3A0%2CC0003%3A0%2CC0004%3A0%2CSTACK42%3A0&AwaitingReconsent=false
+
+.msn.com	TRUE	/	FALSE	2597573456	pglt-edgeChromium-dhp	2083
+

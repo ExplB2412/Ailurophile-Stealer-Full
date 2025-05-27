@@ -1,0 +1,5 @@
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\bin\Debug\net5.0\publish\AiluV4.exe
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\bin\Debug\net5.0\publish\AiluV4.dll
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\bin\Debug\net5.0\publish\AiluV4.deps.json
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\bin\Debug\net5.0\publish\AiluV4.runtimeconfig.json
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\bin\Debug\net5.0\publish\AiluV4.pdb

@@ -1,0 +1,3 @@
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\bin\Debug\net481\publish\win7-x86\AiluV4.exe
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\bin\Debug\net481\publish\win7-x86\AiluV4.exe.config
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\bin\Debug\net481\publish\win7-x86\AiluV4.pdb

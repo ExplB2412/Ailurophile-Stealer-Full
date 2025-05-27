@@ -1,0 +1,5 @@
+requests
+pycryptodome
+pyasn1
+websocket-client
+pypiwin32

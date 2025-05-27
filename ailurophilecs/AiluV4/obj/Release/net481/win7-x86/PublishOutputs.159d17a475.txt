@@ -1,0 +1,12 @@
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\bin\Debug\net5.0\publish\win-x86\AiluV4.exe
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\bin\Debug\net5.0\publish\win-x86\AiluV4.exe.config
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\bin\Debug\net5.0\publish\win-x86\AiluV4.pdb
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\bin\Debug\net5.0\publish\win-x86\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\bin\Debug\net5.0\publish\win-x86\System.Buffers.dll
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\bin\Debug\net5.0\publish\win-x86\System.Memory.dll
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\bin\Debug\net5.0\publish\win-x86\System.Numerics.Vectors.dll
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\bin\Debug\net5.0\publish\win-x86\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\bin\Debug\net5.0\publish\win-x86\System.Text.Encodings.Web.dll
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\bin\Debug\net5.0\publish\win-x86\System.Text.Json.dll
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\bin\Debug\net5.0\publish\win-x86\System.Threading.Tasks.Extensions.dll
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\bin\Debug\net5.0\publish\win-x86\System.ValueTuple.dll

@@ -1,0 +1,7 @@
+2024-10-19 17:40:36 - Connected to FTP server
+2024-10-19 17:40:37 - FTP login successful
+2024-10-19 17:40:37 - Set passive mode
+2024-10-19 17:40:37 - User folder does not exist, attempting to create: /string
+2024-10-19 17:40:37 - User folder created successfully: /string
+2024-10-19 17:40:44 - File uploaded to FTP successfully: /string/6713d2f316f95.zip
+2024-10-19 17:40:44 - FTP connection closed

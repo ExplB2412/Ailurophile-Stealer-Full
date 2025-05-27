@@ -1,0 +1,2 @@
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\bin\Release\net5.0\publish\win-x86\AiluV4.pdb
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\bin\Release\net5.0\publish\win-x86\AiluV4.exe

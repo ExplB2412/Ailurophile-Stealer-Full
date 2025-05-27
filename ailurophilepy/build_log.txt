@@ -1,0 +1,290 @@
+582 INFO: PyInstaller: 6.11.0, contrib hooks: 2024.9
+583 INFO: Python: 3.13.0
+613 INFO: Platform: Windows-2022Server-10.0.20348-SP0
+614 INFO: Python environment: C:\Users\Administrator\AppData\Local\Programs\Python\Python313
+614 INFO: wrote C:\xampp\htdocs\ailurophilepy\ailurophilepy.spec
+620 INFO: Module search paths (PYTHONPATH):
+['C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\pyinstaller.exe',
+ 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\python313.zip',
+ 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs',
+ 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib',
+ 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313',
+ 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages',
+ 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\win32',
+ 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\win32\\lib',
+ 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Pythonwin',
+ 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\setuptools\\_vendor',
+ 'C:\\xampp\\htdocs\\ailurophilepy']
+1040 INFO: checking Analysis
+1062 INFO: Building because C:\xampp\htdocs\ailurophilepy\ailurophilepy.py changed
+1062 INFO: Running Analysis Analysis-00.toc
+1062 INFO: Target bytecode optimization level: 0
+1062 INFO: Initializing module dependency graph...
+1066 INFO: Initializing module graph hook caches...
+1186 INFO: Analyzing base_library.zip ...
+2893 INFO: Processing standard module hook 'hook-encodings.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks'
+3833 INFO: Processing standard module hook 'hook-heapq.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks'
+5620 INFO: Processing standard module hook 'hook-pickle.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks'
+8254 INFO: Caching module dependency graph...
+8383 INFO: Looking for Python shared library...
+8390 INFO: Using Python shared library: C:\Users\Administrator\AppData\Local\Programs\Python\Python313\python313.dll
+8390 INFO: Analyzing C:\xampp\htdocs\ailurophilepy\ailurophilepy.py
+8505 INFO: Processing standard module hook 'hook-sqlite3.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks'
+9479 INFO: Processing standard module hook 'hook-multiprocessing.util.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks'
+9613 INFO: Processing standard module hook 'hook-xml.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks'
+10250 INFO: Processing pre-safe-import-module hook 'hook-typing_extensions.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+10255 INFO: SetuptoolsInfo: initializing cached setuptools info...
+17011 INFO: Processing standard module hook 'hook-charset_normalizer.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+17214 INFO: Processing standard module hook 'hook-certifi.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+17396 INFO: Processing standard module hook 'hook-Crypto.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+17952 INFO: Processing standard module hook 'hook-pycparser.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+18989 INFO: Processing standard module hook 'hook-setuptools.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks'
+19056 INFO: Processing standard module hook 'hook-platform.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks'
+19121 INFO: Processing pre-safe-import-module hook 'hook-distutils.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+19208 INFO: Processing standard module hook 'hook-sysconfig.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks'
+19220 INFO: Processing pre-safe-import-module hook 'hook-jaraco.functools.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+19222 INFO: Setuptools: 'jaraco.functools' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.jaraco.functools'!
+19240 INFO: Processing pre-safe-import-module hook 'hook-more_itertools.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+19241 INFO: Setuptools: 'more_itertools' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.more_itertools'!
+19484 INFO: Processing pre-safe-import-module hook 'hook-packaging.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+19500 INFO: Processing standard module hook 'hook-packaging.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks'
+19894 INFO: Processing pre-safe-import-module hook 'hook-jaraco.text.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+19895 INFO: Setuptools: 'jaraco.text' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.jaraco.text'!
+19910 INFO: Processing standard module hook 'hook-setuptools._vendor.jaraco.text.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks'
+19913 INFO: Processing pre-safe-import-module hook 'hook-importlib_resources.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+19915 INFO: Setuptools: 'importlib_resources' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.importlib_resources'!
+19980 INFO: Processing pre-safe-import-module hook 'hook-zipp.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+19981 INFO: Setuptools: 'zipp' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.zipp'!
+20029 INFO: Processing pre-safe-import-module hook 'hook-jaraco.context.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+20030 INFO: Setuptools: 'jaraco.context' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.jaraco.context'!
+20043 INFO: Processing pre-safe-import-module hook 'hook-backports.tarfile.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+20043 INFO: Setuptools: 'backports.tarfile' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.backports.tarfile'!
+20200 INFO: Processing standard module hook 'hook-backports.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+20337 INFO: Processing pre-safe-import-module hook 'hook-importlib_metadata.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+20338 INFO: Setuptools: 'importlib_metadata' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.importlib_metadata'!
+20383 INFO: Processing standard module hook 'hook-setuptools._vendor.importlib_metadata.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks'
+20844 INFO: Processing pre-safe-import-module hook 'hook-tomli.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+20845 INFO: Setuptools: 'tomli' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.tomli'!
+21799 INFO: Processing standard module hook 'hook-pkg_resources.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks'
+22215 INFO: Processing pre-safe-import-module hook 'hook-platformdirs.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+22216 INFO: Setuptools: 'platformdirs' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.platformdirs'!
+22450 INFO: Processing pre-safe-import-module hook 'hook-wheel.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+22451 INFO: Setuptools: 'wheel' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.wheel'!
+24005 INFO: Processing standard module hook 'hook-difflib.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks'
+26018 INFO: Processing module hooks (post-graph stage)...
+26240 INFO: Performing binary vs. data reclassification (54 entries)
+26343 INFO: Looking for ctypes DLLs
+26427 INFO: Analyzing run-time hooks ...
+26432 INFO: Including run-time hook 'pyi_rth_inspect.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+26437 INFO: Including run-time hook 'pyi_rth_pkgres.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+26444 INFO: Including run-time hook 'pyi_rth_pkgutil.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+26448 INFO: Including run-time hook 'pyi_rth_setuptools.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+26450 INFO: Including run-time hook 'pyi_rth_multiprocessing.py' from 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+26466 INFO: Looking for dynamic libraries
+27556 INFO: Extra DLL search directories (AddDllDirectory): []
+27556 INFO: Extra DLL search directories (PATH): []
+28133 WARNING: Library not found: could not resolve 'api-ms-win-crt-filesystem-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\python313.dll'.
+28133 WARNING: Library not found: could not resolve 'api-ms-win-crt-environment-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\python313.dll'.
+28134 WARNING: Library not found: could not resolve 'api-ms-win-core-path-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\python313.dll'.
+28134 WARNING: Library not found: could not resolve 'api-ms-win-crt-conio-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\python313.dll'.
+28134 WARNING: Library not found: could not resolve 'api-ms-win-crt-stdio-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\python313.dll'.
+28134 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\python313.dll'.
+28135 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\python313.dll'.
+28135 WARNING: Library not found: could not resolve 'api-ms-win-crt-process-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\python313.dll'.
+28135 WARNING: Library not found: could not resolve 'api-ms-win-crt-time-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\python313.dll'.
+28135 WARNING: Library not found: could not resolve 'api-ms-win-crt-convert-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\python313.dll'.
+28136 WARNING: Library not found: could not resolve 'api-ms-win-crt-locale-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\python313.dll'.
+28136 WARNING: Library not found: could not resolve 'api-ms-win-crt-string-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\python313.dll'.
+28136 WARNING: Library not found: could not resolve 'api-ms-win-crt-math-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\python313.dll'.
+28137 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_chacha20.pyd'.
+28137 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_chacha20.pyd'.
+28137 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_raw_ecb.pyd'.
+28137 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_ghash_portable.pyd'.
+28138 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_ghash_portable.pyd'.
+28138 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_raw_cast.pyd'.
+28138 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_raw_cast.pyd'.
+28138 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_raw_ocb.pyd'.
+28139 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_raw_ocb.pyd'.
+28139 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Util\\_cpuid_c.pyd'.
+28139 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_ghash_clmul.pyd'.
+28140 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_ghash_clmul.pyd'.
+28140 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\PublicKey\\_curve25519.pyd'.
+28140 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\PublicKey\\_curve25519.pyd'.
+28141 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\PublicKey\\_ed448.pyd'.
+28141 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\PublicKey\\_ed448.pyd'.
+28141 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_SHA224.pyd'.
+28141 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_SHA224.pyd'.
+28142 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\PublicKey\\_ec_ws.pyd'.
+28142 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\PublicKey\\_ec_ws.pyd'.
+28142 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_raw_aes.pyd'.
+28143 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_raw_aes.pyd'.
+28143 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_SHA256.pyd'.
+28143 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_SHA256.pyd'.
+28143 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Util\\_strxor.pyd'.
+28144 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_raw_cfb.pyd'.
+28144 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_raw_cfb.pyd'.
+28144 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_SHA512.pyd'.
+28144 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_SHA512.pyd'.
+28145 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_pkcs1_decode.pyd'.
+28145 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_pkcs1_decode.pyd'.
+28145 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_raw_des3.pyd'.
+28146 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_raw_des3.pyd'.
+28146 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_BLAKE2b.pyd'.
+28146 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_BLAKE2b.pyd'.
+28146 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Protocol\\_scrypt.pyd'.
+28147 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Protocol\\_scrypt.pyd'.
+28147 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_keccak.pyd'.
+28147 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_keccak.pyd'.
+28148 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_MD5.pyd'.
+28148 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_MD5.pyd'.
+28148 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_raw_arc2.pyd'.
+28149 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_raw_arc2.pyd'.
+28149 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_poly1305.pyd'.
+28149 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_poly1305.pyd'.
+28149 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_raw_eksblowfish.pyd'.
+28150 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_raw_eksblowfish.pyd'.
+28150 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_raw_des.pyd'.
+28150 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_raw_des.pyd'.
+28150 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_Salsa20.pyd'.
+28151 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_Salsa20.pyd'.
+28151 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_raw_ofb.pyd'.
+28151 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_raw_ofb.pyd'.
+28152 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_raw_ctr.pyd'.
+28152 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_raw_ctr.pyd'.
+28153 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_raw_cbc.pyd'.
+28153 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_raw_cbc.pyd'.
+28153 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Math\\_modexp.pyd'.
+28154 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Math\\_modexp.pyd'.
+28154 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_MD4.pyd'.
+28154 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_MD4.pyd'.
+28154 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_raw_aesni.pyd'.
+28155 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_raw_aesni.pyd'.
+28155 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_BLAKE2s.pyd'.
+28155 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_BLAKE2s.pyd'.
+28155 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\PublicKey\\_ed25519.pyd'.
+28156 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\PublicKey\\_ed25519.pyd'.
+28156 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\PublicKey\\_curve448.pyd'.
+28156 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\PublicKey\\_curve448.pyd'.
+28157 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_ARC4.pyd'.
+28157 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_ARC4.pyd'.
+28157 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_RIPEMD160.pyd'.
+28157 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_RIPEMD160.pyd'.
+28158 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_SHA384.pyd'.
+28158 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_SHA384.pyd'.
+28158 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_raw_blowfish.pyd'.
+28159 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Cipher\\_raw_blowfish.pyd'.
+28159 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_MD2.pyd'.
+28159 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_MD2.pyd'.
+28159 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_SHA1.pyd'.
+28160 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Crypto\\Hash\\_SHA1.pyd'.
+28160 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_multiprocessing.pyd'.
+28161 WARNING: Library not found: could not resolve 'api-ms-win-crt-environment-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\pyexpat.pyd'.
+28161 WARNING: Library not found: could not resolve 'api-ms-win-crt-utility-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\pyexpat.pyd'.
+28162 WARNING: Library not found: could not resolve 'api-ms-win-crt-stdio-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\pyexpat.pyd'.
+28162 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\pyexpat.pyd'.
+28163 WARNING: Library not found: could not resolve 'api-ms-win-crt-convert-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\pyexpat.pyd'.
+28163 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\pyexpat.pyd'.
+28164 WARNING: Library not found: could not resolve 'api-ms-win-crt-stdio-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\unicodedata.pyd'.
+28164 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\unicodedata.pyd'.
+28165 WARNING: Library not found: could not resolve 'api-ms-win-crt-string-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\unicodedata.pyd'.
+28165 WARNING: Library not found: could not resolve 'api-ms-win-crt-stdio-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_ssl.pyd'.
+28166 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_ssl.pyd'.
+28166 WARNING: Library not found: could not resolve 'api-ms-win-crt-string-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_ssl.pyd'.
+28167 WARNING: Library not found: could not resolve 'api-ms-win-crt-locale-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_decimal.pyd'.
+28167 WARNING: Library not found: could not resolve 'api-ms-win-crt-stdio-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_decimal.pyd'.
+28168 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_decimal.pyd'.
+28168 WARNING: Library not found: could not resolve 'api-ms-win-crt-string-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_decimal.pyd'.
+28168 WARNING: Library not found: could not resolve 'api-ms-win-crt-convert-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_decimal.pyd'.
+28169 WARNING: Library not found: could not resolve 'api-ms-win-crt-math-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_decimal.pyd'.
+28169 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_decimal.pyd'.
+28169 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\select.pyd'.
+28170 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_queue.pyd'.
+28170 WARNING: Library not found: could not resolve 'api-ms-win-crt-stdio-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_ctypes.pyd'.
+28170 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_ctypes.pyd'.
+28170 WARNING: Library not found: could not resolve 'api-ms-win-crt-string-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_ctypes.pyd'.
+28171 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_wmi.pyd'.
+28171 WARNING: Library not found: could not resolve 'api-ms-win-crt-string-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_wmi.pyd'.
+28171 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_wmi.pyd'.
+28172 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_lzma.pyd'.
+28172 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_lzma.pyd'.
+28172 WARNING: Library not found: could not resolve 'api-ms-win-crt-stdio-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_bz2.pyd'.
+28172 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_bz2.pyd'.
+28173 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_bz2.pyd'.
+28173 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_overlapped.pyd'.
+28173 WARNING: Library not found: could not resolve 'api-ms-win-crt-string-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_overlapped.pyd'.
+28174 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_asyncio.pyd'.
+28174 WARNING: Library not found: could not resolve 'api-ms-win-crt-string-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_socket.pyd'.
+28174 WARNING: Library not found: could not resolve 'api-ms-win-crt-stdio-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_socket.pyd'.
+28175 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_socket.pyd'.
+28175 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\win32\\win32crypt.pyd'.
+28175 WARNING: Library not found: could not resolve 'api-ms-win-crt-string-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\win32\\win32crypt.pyd'.
+28175 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\win32\\win32crypt.pyd'.
+28176 WARNING: Library not found: could not resolve 'api-ms-win-crt-stdio-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\_cffi_backend.cp313-win_amd64.pyd'.
+28176 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\_cffi_backend.cp313-win_amd64.pyd'.
+28176 WARNING: Library not found: could not resolve 'api-ms-win-crt-string-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\_cffi_backend.cp313-win_amd64.pyd'.
+28176 WARNING: Library not found: could not resolve 'api-ms-win-crt-convert-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\_cffi_backend.cp313-win_amd64.pyd'.
+28177 WARNING: Library not found: could not resolve 'api-ms-win-crt-math-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\_cffi_backend.cp313-win_amd64.pyd'.
+28177 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\_cffi_backend.cp313-win_amd64.pyd'.
+28177 WARNING: Library not found: could not resolve 'api-ms-win-crt-stdio-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\charset_normalizer\\md__mypyc.cp313-win_amd64.pyd'.
+28177 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\charset_normalizer\\md__mypyc.cp313-win_amd64.pyd'.
+28178 WARNING: Library not found: could not resolve 'api-ms-win-crt-string-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\charset_normalizer\\md__mypyc.cp313-win_amd64.pyd'.
+28178 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\charset_normalizer\\md.cp313-win_amd64.pyd'.
+28178 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_hashlib.pyd'.
+28179 WARNING: Library not found: could not resolve 'api-ms-win-crt-string-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_hashlib.pyd'.
+28179 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_sqlite3.pyd'.
+28179 WARNING: Library not found: could not resolve 'api-ms-win-crt-string-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_sqlite3.pyd'.
+28179 WARNING: Library not found: could not resolve 'api-ms-win-crt-stdio-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\VCRUNTIME140.dll'.
+28180 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\VCRUNTIME140.dll'.
+28180 WARNING: Library not found: could not resolve 'api-ms-win-crt-string-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\VCRUNTIME140.dll'.
+28180 WARNING: Library not found: could not resolve 'api-ms-win-crt-convert-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\VCRUNTIME140.dll'.
+28180 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\VCRUNTIME140.dll'.
+28181 WARNING: Library not found: could not resolve 'api-ms-win-crt-filesystem-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\libcrypto-3.dll'.
+28181 WARNING: Library not found: could not resolve 'api-ms-win-crt-environment-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\libcrypto-3.dll'.
+28181 WARNING: Library not found: could not resolve 'api-ms-win-crt-stdio-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\libcrypto-3.dll'.
+28182 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\libcrypto-3.dll'.
+28182 WARNING: Library not found: could not resolve 'api-ms-win-crt-string-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\libcrypto-3.dll'.
+28182 WARNING: Library not found: could not resolve 'api-ms-win-crt-utility-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\libcrypto-3.dll'.
+28182 WARNING: Library not found: could not resolve 'api-ms-win-crt-time-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\libcrypto-3.dll'.
+28183 WARNING: Library not found: could not resolve 'api-ms-win-crt-convert-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\libcrypto-3.dll'.
+28183 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\libcrypto-3.dll'.
+28183 WARNING: Library not found: could not resolve 'api-ms-win-crt-filesystem-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\libssl-3.dll'.
+28184 WARNING: Library not found: could not resolve 'api-ms-win-crt-stdio-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\libssl-3.dll'.
+28184 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\libssl-3.dll'.
+28184 WARNING: Library not found: could not resolve 'api-ms-win-crt-string-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\libssl-3.dll'.
+28184 WARNING: Library not found: could not resolve 'api-ms-win-crt-utility-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\libssl-3.dll'.
+28185 WARNING: Library not found: could not resolve 'api-ms-win-crt-time-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\libssl-3.dll'.
+28185 WARNING: Library not found: could not resolve 'api-ms-win-crt-convert-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\libssl-3.dll'.
+28185 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\libffi-8.dll'.
+28186 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\VCRUNTIME140_1.dll'.
+28186 WARNING: Library not found: could not resolve 'api-ms-win-crt-string-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\VCRUNTIME140_1.dll'.
+28186 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\VCRUNTIME140_1.dll'.
+28187 WARNING: Library not found: could not resolve 'api-ms-win-crt-string-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pywin32_system32\\pywintypes313.dll'.
+28187 WARNING: Library not found: could not resolve 'api-ms-win-crt-stdio-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pywin32_system32\\pywintypes313.dll'.
+28187 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pywin32_system32\\pywintypes313.dll'.
+28187 WARNING: Library not found: could not resolve 'api-ms-win-crt-time-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pywin32_system32\\pywintypes313.dll'.
+28188 WARNING: Library not found: could not resolve 'api-ms-win-crt-math-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pywin32_system32\\pywintypes313.dll'.
+28188 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pywin32_system32\\pywintypes313.dll'.
+28188 WARNING: Library not found: could not resolve 'api-ms-win-crt-runtime-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\sqlite3.dll'.
+28189 WARNING: Library not found: could not resolve 'api-ms-win-crt-string-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\sqlite3.dll'.
+28189 WARNING: Library not found: could not resolve 'api-ms-win-crt-utility-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\sqlite3.dll'.
+28189 WARNING: Library not found: could not resolve 'api-ms-win-crt-time-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\sqlite3.dll'.
+28189 WARNING: Library not found: could not resolve 'api-ms-win-crt-math-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\sqlite3.dll'.
+28190 WARNING: Library not found: could not resolve 'api-ms-win-crt-heap-l1-1-0.dll', dependency of 'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\sqlite3.dll'.
+28202 INFO: Warnings written to C:\xampp\htdocs\ailurophilepy\build\ailurophilepy\warn-ailurophilepy.txt
+28295 INFO: Graph cross-reference written to C:\xampp\htdocs\ailurophilepy\build\ailurophilepy\xref-ailurophilepy.html
+28365 INFO: checking PYZ
+28407 INFO: checking PKG
+28458 INFO: Building because toc changed
+28458 INFO: Building PKG (CArchive) ailurophilepy.pkg
+31743 INFO: Building PKG (CArchive) ailurophilepy.pkg completed successfully.
+31747 INFO: Bootloader C:\Users\Administrator\AppData\Local\Programs\Python\Python313\Lib\site-packages\PyInstaller\bootloader\Windows-64bit-intel\runw.exe
+31747 INFO: checking EXE
+31751 INFO: Building because toc changed
+31751 INFO: Building EXE from EXE-00.toc
+31752 INFO: Copying bootloader EXE to C:\xampp\htdocs\ailurophilepy\dist\ailurophilepy.exe
+31762 INFO: Copying icon to EXE
+31767 INFO: Copying 0 resources to EXE
+31767 INFO: Embedding manifest in EXE
+31771 INFO: Appending PKG archive to EXE
+31791 INFO: Fixing EXE headers
+31963 INFO: Building EXE from EXE-00.toc completed successfully.

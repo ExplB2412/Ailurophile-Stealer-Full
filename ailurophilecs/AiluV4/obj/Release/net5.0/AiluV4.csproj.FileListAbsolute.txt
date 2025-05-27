@@ -1,0 +1,15 @@
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\bin\Release\net5.0\AiluV4.exe
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\bin\Release\net5.0\AiluV4.deps.json
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\bin\Release\net5.0\AiluV4.runtimeconfig.json
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\bin\Release\net5.0\AiluV4.runtimeconfig.dev.json
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\bin\Release\net5.0\AiluV4.dll
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\bin\Release\net5.0\AiluV4.pdb
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\obj\Release\net5.0\AiluV4.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\obj\Release\net5.0\AiluV4.AssemblyInfoInputs.cache
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\obj\Release\net5.0\AiluV4.AssemblyInfo.cs
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\obj\Release\net5.0\AiluV4.csproj.CoreCompileInputs.cache
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\obj\Release\net5.0\AiluV4.dll
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\obj\Release\net5.0\refint\AiluV4.dll
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\obj\Release\net5.0\AiluV4.pdb
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\obj\Release\net5.0\AiluV4.genruntimeconfig.cache
+C:\Users\heras\Desktop\BunnyStealer\AiluV4\AiluV4\obj\Release\net5.0\ref\AiluV4.dll
