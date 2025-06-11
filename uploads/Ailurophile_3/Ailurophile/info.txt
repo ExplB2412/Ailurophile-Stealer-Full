@@ -1,7 +1,0 @@
-Ailurophile Stealer - Telegram: @Ailurophilevn
-
-*IP:* 193.226.177.40
-*Hostname:* bogdanandrei02
-*PC Type:* Microsoft Windows 10 Pro
-*Architecture:* i586
-*File Path:* C:\Users\Admin\Downloads\Data
